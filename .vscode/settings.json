@@ -1,4 +1,7 @@
 {
     "terminal.integrated.shellIntegration.history": 1000,
-    "debug.console.wordWrap": false
+    "debug.console.wordWrap": false,
+    "cSpell.words": [
+        "homeapp"
+    ]
 }
