@@ -3,5 +3,6 @@
     "debug.console.wordWrap": false,
     "cSpell.words": [
         "homeapp"
-    ]
+    ],
+    "editor.minimap.showSlider": "always"
 }
