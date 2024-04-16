@@ -13,15 +13,13 @@
     .nav-link:hover {
       color: #df6b05 !important;
     }
-
     .backgroundimage {
       height: 100vh;
-      background-image: url('{% static "background.gif" %}');
+      background-image: url("{% static 'background.gif' %}");
       background-size: cover;
       background-position: center;
       padding: 20px;
     }
-
     /* Style for Search container */
     .search-container {
       display: flex;
@@ -29,40 +27,64 @@
       justify-content: center;
       align-items: center;
     }
-
     .search-box {
       width: 590px;
     }
-
-    .articleMain {
+    .articleMain, .articleMain2, .articleMain3 {
+      margin: 24px 14px;
       position: relative;
       overflow: hidden;
-      background-image: url('{% static "parcel.jpg" %}');
+      background-image: url("{% static 'parcel.jpg' %}");
       background-size: cover;
     }
-
-    .articleMain:before {
+    .articleMain::before, .articleMain2::before, .articleMain3::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.7);
       /* Adjust opacity for fading effect */
     }
-
-    .articleMain img,
-    .card-body {
+    .articleMain img, .articleMain2 img, .articleMain3 img, .card-body {
       position: relative;
+      margin: 11px;
+      font-size:xx-large;
+      text-shadow: 2px 2px #424242;
       color: rgb(255, 255, 255);
       z-index: 1;
       /* Ensure the content is above the background */
     }
-
-    footer {
-      margin-top: 10px;
-      background-color: gainsboro;
+    .footerClass {
+      margin: 13px;
+      font-size:xx-large;
+      position: relative;
+      overflow: hidden;
+      background-image:url("{% static 'aboutus.jpg' %}");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .footerClass::after{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    footer h1 {
+      position: relative;
+      text-align: center;
+      background-color:lightblue;
+      z-index: 1;
+    }
+    .footerClass p {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-shadow: 2px 2px #424242;
     }
   </style>
 </head>
@@ -148,8 +170,41 @@
       </div>
     </div>
   </div>
-  <footer>
-    footer text
+    <div class="articleMain2">
+      <img src="{% static 'Forklift.png' %}" class="card-img-top" alt="forklift"
+        style="margin-top: 39px; height: 200px; width: 200px;">
+      <img src="{% static 'van.png' %}" class="card-img-top2" alt="van">
+      <div class="card-body">
+        <h5 class="card-title">Cargo Services</h5>
+        <p class="card-text">
+          SpeedEx cargo service is the fastest way to transport large parcel items to your destination with affordable & secured service. Our excess of experience and capability of international freight networks enables them efficiently deliver your parcel, on time. We provide transparent tracking report to the customers with our tracking system.
+          Each shipment has unique tracking number based on this, customer can track their cargo from the moment leaves from location and until it get signed and reached the destination.
+        </p>
+        <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
+      </div>
+    </div>
+  </div>
+    <div class="articleMain3">
+      <img src="{% static 'Forklift.png' %}" class="card-img-top" alt="forklift"
+        style="margin-top: 39px; height: 200px; width: 200px;">
+      <img src="{% static 'van.png' %}" class="card-img-top2" alt="van">
+      <div class="card-body">
+        <h5 class="card-title">Logistics Services</h5>
+        <p class="card-text">
+          SpeedEx provides a wide range of logistics solutions via ships, aircraft, train and trucks which can be customized to support your business. We can drive growth with our professional logistics solutions for a small business, individual, corporation or government department, etc.
+          Make simplify your business, improve your profit with our innovative logistics solutions. Our delivery professionals can support reduce the time you spend to handling larger projects to storing, packing and delivering to your destination on time.
+        </p>
+        <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
+      </div>
+    </div>
+  </div>
+  <footer class="footerClass">
+    <h1>ABOUT US </h1>
+    <p>
+      SpeedEx Courier Service is a leading courier and cargo delivery services in International. We bring together the world’s top parcel and cargo carriers into a single access point under our trademark to allowing our customers to save time and money on all their logistics needs.
+      We provide our customers to multiple cargo, courier and logistics services, without limitations on the size, value and weight of parcels we deliver. We have the resources and expertise to deliver and to pick up from virtually any destination on the world.
+      SpeedEx is most efficient and reliable courier service providers who follow professional practices to deliver the best service. With over two decade of existence, experienced team and strong service network, we have been able to efficiently serve our clientele to their needs in International courier Services at most competitive prices.
+    </p>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
