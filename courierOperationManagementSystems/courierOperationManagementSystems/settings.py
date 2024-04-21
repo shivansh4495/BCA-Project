@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "administration",
     "userManagement",
     "packetTrackingSystem",
+    "BranchesInfo",
 ]
 
 MIDDLEWARE = [
