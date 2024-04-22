@@ -1,95 +1,110 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <style>
-    
-    .nav-link:hover {
-      color: #df6b05 !important;
-    }
-    #services-dropdown:hover #services-menu {
-      display: block;
-    }
-    .backgroundimage {
-      height: 85vh;
-      background-image: url("{% static 'background.gif' %}");
-      background-size: cover;
-      background-position:center;
-      padding: 20px;
-    }
-    /* Style for Search container */
-    .search-container {
-      display: flex;
-      margin-top: 4%;
-      justify-content: center;
-      align-items: center;
-    }
-    .search-box {
-      width: 590px;
-    }
-    .articleMain, .articleMain2, .articleMain3 {
-      margin: 24px 14px;
-      position: relative;
-      overflow: hidden;
-      background-image: url("{% static 'parcel.jpg' %}");
-      background-size: cover;
-    }
-    .articleMain::before, .articleMain2::before, .articleMain3::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      /* Adjust opacity for fading effect */
-    }
-    .articleMain img, .articleMain2 img, .articleMain3 img, .card-body {
-      position: relative;
-      margin: 11px;
-      font-size:xx-large;
-      text-shadow: 2px 2px #424242;
-      color: rgb(255, 255, 255);
-      z-index: 1;
-      /* Ensure the content is above the background */
-    }
-    .footerClass {
-      margin: 13px;
-      font-size:xx-large;
-      position: relative;
-      overflow: hidden;
-      background-image:url("{% static 'aboutus.jpg' %}");
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-    .footerClass::after{
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-    }
-    footer h1 {
-      position: relative;
-      text-align: center;
-      background-color:lightblue;
-      z-index: 1;
-    }
-    .footerClass p {
-      position: relative;
-      z-index: 1;
-      color: white;
-      text-shadow: 2px 2px #424242;
-    }
-  </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/homePage.css' %}">
+    <style>
+      .nav-link:hover {
+        color: #df6b05 !important;
+      }
+      #services-dropdown:hover #services-menu, #login-dropdown:hover #login-menu {
+        display: block;
+      }
+      .main{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 86vh;
+        width: 100vw;
+        background-color: rgb(238, 243, 247);
+      }
+      .trackingsearchbox{
+        height: 50%;
+        width: 50%;
+        /* background-color: rgb(238, 243, 247); */
+      }
+      .backgroundimage {
+        
+        height: 50vh;
+        width: 100vw;
+        background-image: url("{% static 'background.gif' %}");
+        background-size: contain;
+        background-position:bottom; 
+        background-repeat: no-repeat;
+      }
+      /* Style for Search container */
+      .search-container{
+        display: flex;
+        margin-top: 4%;
+        justify-content: center;
+        align-items: center;
+      }
+      .search-box {
+        width: 590px;
+      }
+      .articleMain, .articleMain2, .articleMain3 {
+        margin: 24px 14px;
+        position: relative;
+        overflow: hidden;
+        background-image: url("{% static 'parcel.jpg' %}");
+        background-size: cover;
+      }
+      .articleMain::before, .articleMain2::before, .articleMain3::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        /* Adjust opacity for fading effect */
+      }
+      .articleMain img, .articleMain2 img, .articleMain3 img, .card-body {
+        position: relative;
+        margin: 11px;
+        font-size:xx-large;
+        text-shadow: 2px 2px #424242;
+        color: rgb(255, 255, 255);
+        z-index: 1;
+        /* Ensure the content is above the background */
+      }
+      .footerClass {
+        margin: 13px;
+        font-size:xx-large;
+        position: relative;
+        overflow: hidden;
+        background-image:url("{% static 'aboutus.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .footerClass::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+      footer h1 {
+        position: relative;
+        text-align: center;
+        background-color:lightblue;
+        z-index: 1;
+      }
+      .footerClass p {
+        position: relative;
+        z-index: 1;
+        color: white;
+        text-shadow: 2px 2px #424242;
+      }
+    </style>
 </head>
 
 <body>
@@ -98,7 +113,10 @@
       <div class="container-fluid">
         <img src="{% static 'speedEx_logo.png' %}" alt="Logo" style="max-height: 50px; margin-right:10px;">
         <!-- Image tag on the leftmost side -->
-        <a class="navbar-brand me-5" href="#">Home</a>
+        <!-- <a class="navbar-brand me-5 btn btn-lg" href="#" style="background-color: #FF7C00">Go To Home</a> -->
+        <a class="navbar-brand me-5 btn btn-lg" href="#" style="background-color: #FF7C00; margin-left: 9px">
+          <i class="bi-house-door-fill"></i> <!-- Home icon -->
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
           aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -122,39 +140,37 @@
                 <li><a class="dropdown-item" href="#">Logistics Services</a></li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Login</a> <!-- Added login button -->
+            <li class="nav-item dropdown" id="login-dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLogin" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Login
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownLogin" id="login-menu">
+                <li><a class="dropdown-item" href="{% url 'userManagement:user_login_form' %}">User Login</a></li> 
+                <li><a class="dropdown-item" href="{% url 'administration:admin_login_form' %}">Admin Login</a></li>
+              </ul>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   </header>
+  <div class="backgroundimage"></div>
   <div class="main">
-    <div class="backgroundimage">
       <div class="trackingsearchbox">
-        <div class="row">
-          <div class="col"></div>
-          <div class="col-md-6">
             <!-- search box Heading -->
-            <h1 class="searchHeading" style="margin-top: 11%; text-align: center;">Track Speedex Courier</h1>
-            <h4 class="subSearchHeading" style="margin-top: 8%; text-align: center;">Enter your Tracking number and
-              track your Package</h4>
+            <h1 class="searchHeading" style= "margin-top: 73px; text-align: center;">Track Speedex Courier</h1>
+            <h4 class="subSearchHeading" style="text-align: center;">Enter your Tracking number and track your Package</h4>
             <!-- searchbox -->
             <div class="search-container">
-              <form class="search-box" action="/search" method="GET">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Tracking ID" name="q">
-                  <button class="btn btn-primary" style=" background-color: #FF7C00;" type="submit">Track
-                    Package</button>
-                </div>
+              <form class="search-box" action="/search" method="POST">
+                <input type="text" class="form-control" placeholder="Tracking ID">
+                <button  type="submit" class="btn" style="background-color: #FF7C00;">Track Package</button>
               </form>
             </div>
           </div>
-          <div class="col"></div>
-        </div>
+        
       </div>
-    </div>
     <div class="articleMain">
       <img src="{% static 'Forklift.png' %}" class="card-img-top" alt="forklift" style="margin-top: 39px; height: 200px; width: 200px;">
       <img src="{% static 'van.png' %}" class="card-img-top2" alt="van">
@@ -171,7 +187,6 @@
         <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
       </div>
     </div>
-  </div>
     <div class="articleMain2">
       <img src="{% static 'Forklift.png' %}" class="card-img-top" alt="forklift"
         style="margin-top: 39px; height: 200px; width: 200px;">
@@ -185,7 +200,6 @@
         <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
       </div>
     </div>
-  </div>
     <div class="articleMain3">
       <img src="{% static 'Forklift.png' %}" class="card-img-top" alt="forklift"
         style="margin-top: 39px; height: 200px; width: 200px;">
@@ -199,7 +213,6 @@
         <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
       </div>
     </div>
-  </div>
   <footer class="footerClass">
     <h1>ABOUT US </h1>
     <p>
@@ -208,9 +221,9 @@
       SpeedEx is most efficient and reliable courier service providers who follow professional practices to deliver the best service. With over two decade of existence, experienced team and strong service network, we have been able to efficiently serve our clientele to their needs in International courier Services at most competitive prices.
     </p>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    
+  <script 
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+
   </script>
 </body>
 
