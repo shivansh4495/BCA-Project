@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "userManagement",
     "packetTrackingSystem",
     "BranchesInfo",
+    'captcha',
 ]
 
 MIDDLEWARE = [
