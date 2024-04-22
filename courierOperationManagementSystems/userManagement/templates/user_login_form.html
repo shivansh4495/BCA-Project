@@ -59,16 +59,11 @@
 <body>
     <div class="login-container">
         <h2>User Login</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <p style="text-align: center;">{{message}}</p>
-        {% endfor %}
-    {% endif %}
         <form id="frmlogin" onsubmit="event.preventDefault();validate();" class="form-group" action="{% url 'userManagement:user_login_form' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="userid" name="userid" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -84,10 +79,25 @@
     </div>
     <script>
         // Add an event listener to the button
-        document.getElementById("signupButton").addEventListener("click", function() {
+        document.getElementById("signupButton").addEventListener("click", function(event) {
+            // Prevent the default behavior of the button (form submission)
+            event.preventDefault();
             // Redirect to the signup page
             window.location.href = "{% url 'userManagement:signup' %}";
         });
+        function validate() {
+            var userid = document.getElementById("userid");
+            var password = document.getElementById("password");
+            if (userid.value == "" || userid.value == null) {
+                alert('Please enter userid');
+                userid.focus();
+            } else if (password.value == "" || password.value == null) {
+                alert('Please enter password');
+                password.focus();
+            } else {
+                document.getElementById("frmlogin").submit();
+            }
+        }
     </script>
 </body>
 </html>

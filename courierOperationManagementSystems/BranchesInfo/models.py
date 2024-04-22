@@ -15,7 +15,7 @@ class PacketAssignmentDetails(models.Model):
     Assign_DT = models.DateTimeField(null=False)
 
 class delivery_Boy(models.Model):
-    Delivery_Boy_Id = models.CharField(max_length=10, primary_key=True)
+    Delivery_Boy_Id = models.BigAutoField(max_length=10, primary_key=True)
     Delivery_Boy_Name = models.CharField(max_length=50, null=False)
     Delivery_Boy_Address = models.CharField(max_length=100, null=False)
     Delivery_Boy_contact_No = models.IntegerField(null=False)

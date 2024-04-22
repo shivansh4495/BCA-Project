@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Feedback(models.Model):
-    Feedback_Id = models.IntegerField(primary_key=True)
+    Feedback_Id = models.BigAutoField(primary_key=True)
     Fname = models.CharField(max_length=50, null=False)
     Lname = models.CharField(max_length=50, null=False)
     ContactNo = models.CharField(max_length=50, null=True)
