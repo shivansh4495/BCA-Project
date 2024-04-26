@@ -1,13 +1,17 @@
 from django.db import models
 
 # Create your models here.
+from django.db import models
+
+# Create your models here.
 class User_Info(models.Model):
-    User_Id = models.BigAutoField(max_length=50, primary_key=True)
+    id = models.BigAutoField(primary_key=True)
+    User_Id = models.CharField(max_length=30, null=False)
     User_Name = models.CharField(max_length=100, null=False)
     User_Address = models.CharField(max_length=200, null=False)
-    User_contact_N0 = models.CharField(max_length=15, null=True)
+    User_contact_No = models.CharField(max_length=15, null=True)
     User_Email_Id = models.CharField(max_length=30, null=True)
-    Branch_CD = models.IntegerField()
+    Branch_CD = models.IntegerField(null=True)
 
 class POD_Records(models.Model):
     AWBNO = models.CharField(max_length=10, primary_key=True)

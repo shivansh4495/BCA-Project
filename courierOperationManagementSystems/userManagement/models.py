@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Client(models.Model):
-    Client_Id = models.BigAutoField(max_length=50, primary_key=True)
+    Client_Id = models.BigAutoField(primary_key=True)
     Client_Name = models.CharField(max_length=100, null=False)
     Client_Address = models.CharField(max_length=200, null=False)
     Client_contact_No = models.CharField(max_length=15, null=True)
