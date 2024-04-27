@@ -14,7 +14,7 @@ class User_Info(models.Model):
     Branch_CD = models.IntegerField(null=True)
 
 class POD_Records(models.Model):
-    AWBNO = models.CharField(max_length=10, primary_key=True)
+    AWBNO = models.CharField(max_length=10) # removed primary key aspect from this table.
     Del_Status = models.CharField(max_length=20, null=False)
     Receiver_Name = models.CharField(max_length=100, null= False)
     Receiver_Contact_No = models.CharField(max_length=15, null= True)
