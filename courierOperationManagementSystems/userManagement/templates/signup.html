@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,10 +15,63 @@
             border-radius: 5px; /* Add border-radius for rounded corners */
             border: 1px solid #ced4da; /* Add border for clarity */
         }
+        .nav-link:hover {
+            color: #df6b05 !important;
+            }
+            #services-dropdown:hover #services-menu, #login-dropdown:hover #login-menu {
+            display: block;
+            }
     </style>
 
 </head>
 <body>
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary"
+            <div class="container-fluid">
+            <img src="{% static 'speedEx_logo.png' %}" alt="Logo" style="max-height: 50px; margin-right:10px;">
+            <!-- Image tag on the leftmost side -->
+            <!-- <a class="navbar-brand me-5 btn btn-lg" href="#" style="background-color: #FF7C00">Go To Home</a> -->
+            <a class="navbar-brand me-5 btn btn-lg" href="#" style="background-color: #FF7C00; margin-left: 9px">
+              <i class="bi-house-door-fill"></i> <!-- Home icon -->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse nav justify-content-center" id="navbarNavDropdown" style="font-size: 27px;">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Order Tracking</a>
+                </li>
+                <li class="nav-item dropdown" id="services-dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Services
+                  </a>
+                  <ul class="dropdown-menu" id="services-menu" style="font-size: 27px;">
+                    <li><a class="dropdown-item" href="#">Courier Services</a></li>
+                    <li><a class="dropdown-item" href="#">Cargo Services</a></li>
+                    <li><a class="dropdown-item" href="#">Logistics Services</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown" id="login-dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLogin" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Login
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownLogin" id="login-menu" style="font-size: 27px;">
+                    <li><a class="dropdown-item" href="{% url 'userManagement:user_login_form' %}">User Login</a></li> 
+                    <li><a class="dropdown-item" href="{% url 'administration:admin_login_form' %}">Admin Login</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
 {% if messages %}
     {% for message in messages %}
     <div class="alert alert-success alert-dismissible fade show" role="alert">

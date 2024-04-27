@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-    {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-</head>
-<body>
-    <h1>successfully logged in.</h1>
-</body>
-</html>
+{% extends 'homeapp:navbar.html' %}
+
+{% block title %}
+    Login Form
+{% endblock %}
+
+{% block content %}
+    <div class="login-container">
+        <h2>User Login</h2>
+        <!-- Your login form content -->
+    </div>
+{% endblock %}

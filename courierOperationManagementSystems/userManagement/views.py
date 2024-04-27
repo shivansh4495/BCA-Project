@@ -34,6 +34,7 @@ def user_login_form(request):
 #     except KeyError:
 #         return redirect('user_login_form.html')
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_dashboard(request):
     client_id = request.session.get('Client_Id')
     print("Session key 'Client_Id' value:", client_id)  # Add this line for debugging
