@@ -134,9 +134,9 @@
                 Services
               </a>
               <ul class="dropdown-menu" id="services-menu" style="font-size: 27px;">
-                <li><a class="dropdown-item" href="#">Courier Services</a></li>
-                <li><a class="dropdown-item" href="#">Cargo Services</a></li>
-                <li><a class="dropdown-item" href="#">Logistics Services</a></li>
+                <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Courier Services</a></li>
+                <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Cargo Services</a></li>
+                <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Logistics Services</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown" id="login-dropdown">
@@ -147,6 +147,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownLogin" id="login-menu" style="font-size: 27px;">
                 <li><a class="dropdown-item" href="{% url 'userManagement:user_login_form' %}">User Login</a></li> 
                 <li><a class="dropdown-item" href="{% url 'administration:admin_login_form' %}">Admin Login</a></li>
+                <li><a class="dropdown-item" href="{% url 'BranchesInfo:branch_login_form' %}">Branch Head Login</a></li>
               </ul>
             </li>
           </ul>

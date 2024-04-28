@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Order</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Order</h1>
+        <form action="/submit_order" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="sender_name" class="form-label">Sender Name:</label>
+                <input type="text" class="form-control" id="sender_name" name="sender_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="sender_address" class="form-label">Sender Address:</label>
+                <textarea class="form-control" id="sender_address" name="sender_address" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="sender_contact" class="form-label">Sender Contact:</label>
+                <input type="text" class="form-control" id="sender_contact" name="sender_contact" required>
+            </div>
+            <div class="mb-3">
+                <label for="order_type" class="form-label">Order Type:</label>
+                <select class="form-select" id="order_type" name="order_type" required>
+                    <option value="">Select Order Type</option>
+                    <option value="courier">Courier</option>
+                    <option value="cargo">Cargo</option>
+                    <option value="logistics">Logistics</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="order_date" class="form-label">Order Date:</label>
+                <input type="text" class="form-control" id="order_date" name="order_date" value="{{ order_date }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="sender_city" class="form-label">Sender City:</label>
+                <input type="text" class="form-control" id="sender_city" name="sender_city" required>
+            </div>
+            <div class="mb-3">
+                <label for="sender_state" class="form-label">Sender State:</label>
+                <input type="text" class="form-control" id="sender_state" name="sender_state" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Order</button>
+        </form>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

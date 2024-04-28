@@ -5,16 +5,22 @@ import string
 # Create your models here.
 class Branches(models.Model):
     Branch_CD = models.IntegerField(primary_key=True)
-    Branch_NM = models.CharField(max_length=50, null=False)
-    countryId = models.IntegerField(null=False)
+    Branch_NM = models.CharField(max_length=50, null=False) #~ Name of branch
+    countryId = models.IntegerField(null=False) #~ Country code of branch
     stateId  = models.IntegerField(null=False)
     cityId = models.IntegerField(null=False)
     Address = models.CharField(max_length=100, null=False)
+    def __str__(self):
+        return f"{self.Branch_CD} - {self.Branch_NM}"
+
 
 class PacketAssignmentDetails(models.Model):
     Delivery_Boy_Id = models.CharField(max_length=10, null=False)
     AWBNO = models.CharField(max_length=50, null=False)
     Assign_DT = models.DateTimeField(null=False)
+    def __str__(self):
+        return self.Delivery_Boy_Id
+
 
 class delivery_Boy(models.Model):
     Delivery_Boy_Id = models.BigAutoField(primary_key=True)
@@ -32,6 +38,8 @@ class ChargeDetails(models.Model):
     Distance = models.CharField(max_length=50, null=False)
     Weight = models.CharField(max_length=10, null=False)
     Amount = models.CharField(max_length=10, null=False)
+    def __str__(self):
+        return self.PlanCode
 
 class CityDetails(models.Model):
     CityId = models.BigAutoField(primary_key=True)
@@ -45,6 +53,7 @@ class Data_Records(models.Model):
     Sender_Contact_No = models.CharField(max_length=15, null=True)
     Sender_City = models.CharField(max_length=30, null=True)
     Receiver_Name = models.CharField(max_length=100, null=False)
+    Receiver_Address = models.CharField(max_length=100, null=True)
     Receiver_Contact_No = models.CharField(max_length=15, null=True)
     Receiver_City = models.CharField(max_length=30, null=True)
     Book_date = models.DateTimeField(null=False)
@@ -77,3 +86,6 @@ class Data_Records(models.Model):
             random_chars = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
             awbno = 'AWB_' + random_chars
         return awbno
+
+    def __str__(self):
+        return self.AWBNO

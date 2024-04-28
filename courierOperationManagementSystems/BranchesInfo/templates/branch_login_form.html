@@ -119,7 +119,7 @@
         </nav>
       </header>
     <div class="login-container">
-        <h2>User Login</h2>
+        <h2>branch Head Login</h2>
         <form id="frmlogin" onsubmit="event.preventDefault();validate();" class="form-group"  method="POST" action="{% url 'userManagement:user_login_form' %}">
             {% csrf_token %}
             {% if messages %}
