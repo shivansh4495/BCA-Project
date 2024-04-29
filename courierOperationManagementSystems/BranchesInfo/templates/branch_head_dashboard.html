@@ -11,6 +11,7 @@
     <title>Sidebar Dashboard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         /* Adjust sidebar width and colors */
         .sidebar {
@@ -65,42 +66,46 @@
                 <!-- User Info -->
                 <div class="user-info">
                     Welcome, {{ username }}
+                    <!-- You can replace `{{ username }}` with the actual username variable you pass from the Django view -->
                 </div>
-                <a href="#"><i class="fas fa-user"></i> Branches Details</a>
-                <a href="{% url 'administration:add_branch' %}"><i class="fas fa-comment"></i> Create new Branch</a>
+                <!-- Profile Management Link -->
+                <a href="#"><i class="fas fa-user"></i> view branch info</a>
+
+                <!-- Feedback Link -->
+                <a href="#"><i class=""></i>view orders status</a>
+                <a href="#"><i class=""></i>view delivery boys details</a>
+                <a href="{% url 'BranchesInfo:add_delivery_boy' %}"><i class=""></i>add new delivery boy</a>
 
                 <!-- Logout Button -->
-                <a href="{% url 'administration:admin_login_form' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="{% url 'BranchesInfo:branch_login_form'%}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
 
-            <!-- dashboard details Details -->
+            <!-- Current Order Details -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="order-details">
-                    <h2>Total number of shipments</h2>
-                    <div class="row">
-                        <div class="col">
-                            <h4>Courier</h4>
-                            <p>Total packets: {{ courier_count }}</p>
-                        </div>
-                        <div class="col">
-                            <h4>Cargo</h4>
-                            <p>Total packets: {{ cargo_count }}</p>
-                        </div>
-                        <div class="col">
-                            <h4>Logistics</h4>
-                            <p>Total packets: {{ logistics_count }}</p>
-                        </div>
-                    </div>
+                    <h2>Total number of orders in your Branch</h2>
                 </div>
-                <div class="Branches-details">
-                    <h2>Branches Details</h2>
+                <div class="order-details">
+                    <h2>Assigned Orders</h2>
+                    
+                </div>
+                <div class="order-details">
+                    <h2>Unassigned Orders</h2>
+                    
+                </div>
+                <div class="order-details">
+                    <h2>Successfully Delivered Orders</h2>
+                    
+                </div>
+                <div class="order-details">
+                    <h2>Un Delivered Orders</h2>
                     
                 </div>
             </main>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const toggleDropdowns = document.querySelectorAll('.toggle-dropdown');

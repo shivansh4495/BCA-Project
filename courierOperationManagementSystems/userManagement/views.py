@@ -7,6 +7,7 @@ from . forms import MyForm
 from packetTrackingSystem.models import User_Info
 from BranchesInfo.models import Data_Records, Branches
 from django.views.decorators.cache import cache_control
+from django.contrib.auth import logout
 
 
 def user_login_form(request):
@@ -22,6 +23,11 @@ def user_login_form(request):
             print("Login failed: Invalid User name or Password")
             messages.error(request, 'Invalid User name or Password')
     return render(request, 'User_login_form.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('admin_login_form')  # Redirect to the login page after logout
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_dashboard(request):
@@ -58,6 +64,7 @@ def signup(request):
             messages.success(request,'Invalid captcha code')
     return render(request,"signup.html",locals())
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def client_order(request):
     form=MyForm()
     if request.method == 'POST':

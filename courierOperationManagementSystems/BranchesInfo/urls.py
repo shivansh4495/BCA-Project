@@ -1,6 +1,10 @@
 from django.urls import path
 from . import views
 
+app_name = 'BranchesInfo'
 urlpatterns = [
     path('branch_login_form/', views.branch_login_form, name='branch_login_form'),
+    path('branch_head_dashboard/', views.branch_head_dashboard, name='branch_head_dashboard'),
+    path('delivery_boy_dashboard/', views.delivery_boy_dashboard, name='delivery_boy_dashboard'),
+    path('add_delivery_boy/', views.add_delivery_boy, name='add_delivery_boy'),
 ]

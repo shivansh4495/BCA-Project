@@ -6,10 +6,14 @@ import string
 class Branches(models.Model):
     Branch_CD = models.IntegerField(primary_key=True)
     Branch_NM = models.CharField(max_length=50, null=False) #~ Name of branch
-    countryId = models.IntegerField(null=False) #~ Country code of branch
-    stateId  = models.IntegerField(null=False)
-    cityId = models.IntegerField(null=False)
+    countryId = models.CharField(max_length=50,null=True) #~ Country code of branch
+    stateId  = models.CharField(max_length=50,null=True)
+    cityId = models.CharField(max_length=50,null=True)
     Address = models.CharField(max_length=100, null=False)
+    city = models.CharField(max_length=100, null=True)
+    state = models.CharField(max_length=100, null=True)
+    country = models.CharField(max_length=100, null=True)
+    Branch_head =models.CharField(max_length=100, null=True)
     def __str__(self):
         return f"{self.Branch_CD} - {self.Branch_NM}"
 
@@ -22,13 +26,16 @@ class PacketAssignmentDetails(models.Model):
         return self.Delivery_Boy_Id
 
 
-class delivery_Boy(models.Model):
+class delivery_Boy_details(models.Model):
     Delivery_Boy_Id = models.BigAutoField(primary_key=True)
     Delivery_Boy_Name = models.CharField(max_length=50, null=False)
+    Delivery_Boy_Username = models.CharField(max_length=50, null=False)
+    Delivery_Boy_Password = models.CharField(max_length=50, null=False)
     Delivery_Boy_Address = models.CharField(max_length=100, null=False)
     Delivery_Boy_contact_No = models.IntegerField(null=False)
-    Delivery_Boy_Area = models.CharField(max_length=30, null=True)
+    Delivery_Boy_Area = models.CharField(max_length=30, null=True) #! use as branch name 
     Branch_CD = models.IntegerField(null=False)
+    User_Type=models.CharField(max_length=20, null=False)
 
 class delivery_Boy_ID(models.Model):
     Current_ID = models.CharField(max_length=4, primary_key=True) 
@@ -89,3 +96,15 @@ class Data_Records(models.Model):
 
     def __str__(self):
         return self.AWBNO
+
+
+class Branch_head(models.Model):
+    Branch_head_Id = models.BigAutoField(primary_key=True)
+    Branch_head_Name = models.CharField(max_length=50, null=True)
+    Branch_head_Username = models.CharField(max_length=50, null=False)
+    Branch_head_Password = models.CharField(max_length=50, null=False)
+    Branch_CD = models.IntegerField(null=True) 
+    User_Type=models.CharField(max_length=20, null=False)
+
+    def __str__(self):
+        return f"{self.Branch_head_Id} - {self.Branch_head_Name}"
