@@ -9,62 +9,38 @@ from BranchesInfo.models import Data_Records, Branches
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import logout
 from django.utils import timezone
-from django.db import connection
 
 def user_login_form(request):
     if request.method == 'POST':
         username = request.POST.get('userid')
         password = request.POST.get('password')
         try:
-            # Attempt to retrieve the Login_Info object
             login_info = Login_Info.objects.get(User_Id=username, User_Password=password)
-            # Attempt to retrieve the corresponding Client object
-            try:
-                client = Client.objects.get(Client_Email_Id=username)
-            except Client.DoesNotExist:
-                # Handle the case where no corresponding Client exists for the provided email
-                messages.error(request, 'Login failed: Invalid User name or Password')
-                return render(request, 'User_login_form.html')
-            # Set session data
-            request.session['Client_Id'] = client.Client_Id
+            client = Client.objects.get(Client_Email_Id=username)
             request.session['Client_Name'] = client.Client_Name
+            request.session['Client_Id'] = client.Client_Id
             print("Session keys 'Client ID:' set successfully: ", client.Client_Id)
-            print("Session keys 'Client_Name' set successfully for:", username)  
-            # Render user dashboard page with username
-            return render(request, 'user_dashboard.html', {'username': username})
-        
+            return redirect(reverse('userManagement:user_dashboard') + f'?username={client.Client_Name}')
         except Login_Info.DoesNotExist:
-            # Handle invalid username or password
             print("Login failed: Invalid User name or Password")
             messages.error(request, 'Login failed: Invalid User name or Password')
-    # Render login form
     return render(request, 'User_login_form.html')
-
-
-
-def logout_view(request):
-    logout(request)
-    request.session.flush()  # Delete the session data
-    print("Session deleted after logout:", request.session.session_key)
-    return redirect('admin_login_form')  # Redirect to the login page after logout
-
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_dashboard(request):
-    # Retrieve Client_Id from session
-    client_id = request.session.get('Client_Id')
-    print(client_id)
-
-    # Retrieve orders associated with the current user
-    user_orders = Data_Records.objects.filter(client__Client_Id=client_id)
-
-    # Print the generated SQL query
-    print(str(user_orders.query))
-
-    # Pass user_orders to the template
-    return render(request, 'user_dashboard.html', {'user_orders': user_orders})
-
-
+    # Retrieve the username from the query parameters
+    username = request.GET.get('username')
+    try:
+        session_id = request.session.get('Client_Id')
+        if session_id is not None:
+            print("Session ID of the user :", session_id)
+            # Fetch data related to the user and pass it to the dashboard template
+            user_orders = Data_Records.objects.filter(Client_Id=session_id)
+            return render(request, 'user_dashboard.html', {'user_orders': user_orders, 'username': username})
+    except KeyError:
+        print("Session key not found")
+    # Redirect to the login form if session is not available or invalid
+    return redirect('user_login_form')
 
 def signup(request):
     form=MyForm()   
@@ -88,9 +64,7 @@ def signup(request):
             messages.success(request,'Invalid captcha code')
     return render(request,"signup.html",locals())
 
-
-
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def client_order(request):
     client_id = request.session.get('Client_Id')
     print("Session key 'Client_Id' value:", client_id)
@@ -103,7 +77,6 @@ def client_order(request):
         except Client.DoesNotExist:
             # Handle the case where the client does not exist
             return render(request, 'User_login_form.html') # Redirect to login page
-
         if request.method == 'POST':
             sender_name = request.POST['sender_name']
             sender_address = request.POST['sender_address']
@@ -137,7 +110,7 @@ def client_order(request):
                 # Save the order with the client ID
                 final_order = Data_Records(Sender_Name=sender_name, Sender_Address=sender_address, Sender_Contact_No=sender_contact, Book_date=order_date_aware, Sender_City=sender_city, Receiver_Name=receiver_name, Receiver_Address=receiver_address, Receiver_Contact_No=receiver_contact, Receiver_City=receiver_city, order_type=order_type, sender_state=sender_state, receiver_state=receiver_state, Client_Id=client)
                 final_order.save()
-                return render(request, 'user_dashboard.html')
+                return redirect('userManagement:user_dashboard')
         else:
             current_date = datetime.now().strftime('%Y-%m-%d')
             sender_states = Branches.objects.values_list('state', flat=True).distinct()
@@ -148,3 +121,9 @@ def client_order(request):
     else:
         # If the session is not valid (Client_Id is not in the session), redirect to login page
         return render(request, 'User_login_form.html')
+
+def logout_view(request):
+    logout(request)
+    request.session.flush()  # Delete the session data
+    print("Session deleted after logout:", request.session.session_key)
+    return redirect('admin_login_form')  # Redirect to the login page after logout
