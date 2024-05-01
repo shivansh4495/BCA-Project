@@ -8,38 +8,62 @@ from packetTrackingSystem.models import User_Info
 from BranchesInfo.models import Data_Records, Branches
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import logout
-
+from django.utils import timezone
+from django.db import connection
 
 def user_login_form(request):
     if request.method == 'POST':
-        username = request.POST['userid']
-        password = request.POST['password']
+        username = request.POST.get('userid')
+        password = request.POST.get('password')
         try:
-            obj = Login_Info.objects.get(User_Id=username, User_Password=password)
-            request.session['Client_Id']=username
-            print("Session key 'Client_Id' set successfully:", username)  
+            # Attempt to retrieve the Login_Info object
+            login_info = Login_Info.objects.get(User_Id=username, User_Password=password)
+            # Attempt to retrieve the corresponding Client object
+            try:
+                client = Client.objects.get(Client_Email_Id=username)
+            except Client.DoesNotExist:
+                # Handle the case where no corresponding Client exists for the provided email
+                messages.error(request, 'Login failed: Invalid User name or Password')
+                return render(request, 'User_login_form.html')
+            # Set session data
+            request.session['Client_Id'] = client.Client_Id
+            request.session['Client_Name'] = client.Client_Name
+            print("Session keys 'Client ID:' set successfully: ", client.Client_Id)
+            print("Session keys 'Client_Name' set successfully for:", username)  
+            # Render user dashboard page with username
             return render(request, 'user_dashboard.html', {'username': username})
+        
         except Login_Info.DoesNotExist:
+            # Handle invalid username or password
             print("Login failed: Invalid User name or Password")
-            messages.error(request, 'Invalid User name or Password')
+            messages.error(request, 'Login failed: Invalid User name or Password')
+    # Render login form
     return render(request, 'User_login_form.html')
+
+
 
 def logout_view(request):
     logout(request)
+    request.session.flush()  # Delete the session data
+    print("Session deleted after logout:", request.session.session_key)
     return redirect('admin_login_form')  # Redirect to the login page after logout
 
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_dashboard(request):
+    # Retrieve Client_Id from session
     client_id = request.session.get('Client_Id')
-    print("Session key 'Client_Id' value:", client_id) 
-    if client_id:
-        # Session key exists, do something with it
-        usrdetail = User_Info.objects.get(User_Id=client_id)
-        return render(request, 'user_dashboard.html', {'usrdetail': usrdetail})
-    else:
-        # Session key does not exist, handle the case accordingly
-        return redirect('user_login_form')
+    print(client_id)
+
+    # Retrieve orders associated with the current user
+    user_orders = Data_Records.objects.filter(client__Client_Id=client_id)
+
+    # Print the generated SQL query
+    print(str(user_orders.query))
+
+    # Pass user_orders to the template
+    return render(request, 'user_dashboard.html', {'user_orders': user_orders})
+
 
 
 def signup(request):
@@ -64,33 +88,63 @@ def signup(request):
             messages.success(request,'Invalid captcha code')
     return render(request,"signup.html",locals())
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+
+
+
 def client_order(request):
-    form=MyForm()
-    if request.method == 'POST':
-        sender_name = request.POST['sender_name']
-        sender_address = request.POST['sender_address']
-        sender_contact = request.POST['sender_contact']
-        order_type = request.POST['order_type']
-        order_date = request.POST['order_date'] 
-        sender_city = request.POST['sender_city']
-        
-        receiver_name = request.POST['receiver_name']
-        receiver_address = request.POST['receiver_address']
-        receiver_contact = request.POST['receiver_contact']
-        receiver_city = request.POST['receiver_city']
-        
-        # Get the client's session ID for showing the orders to the correct user's dashboard.
-        client_id = request.session.get('Client_Id')
-        print("Session key 'Client_Id' value:", client_id)
-        
-        # Save the form data to Data_Records table
-        final_order = Data_Records(Sender_Name=sender_name, Sender_Address=sender_address, Sender_Contact_No=sender_contact, Book_date=order_date, Sender_City=sender_city, Receiver_Name=receiver_name, Receiver_Address=receiver_address, Receiver_Contact_No=receiver_contact, Receiver_City=receiver_city)
-        final_order.save()
-        return redirect('user_dashboard')
+    client_id = request.session.get('Client_Id')
+    print("Session key 'Client_Id' value:", client_id)
+    
+    # Check if the session is valid (Client_Id exists in the session)
+    if client_id:
+        try:
+            # Retrieve the client using Client_Email_Id
+            client = Client.objects.get(Client_Id=client_id)
+        except Client.DoesNotExist:
+            # Handle the case where the client does not exist
+            return render(request, 'User_login_form.html') # Redirect to login page
+
+        if request.method == 'POST':
+            sender_name = request.POST['sender_name']
+            sender_address = request.POST['sender_address']
+            sender_contact = request.POST['sender_contact']
+            order_type = request.POST['order_type']
+            order_date = request.POST['order_date'] 
+            order_date_aware = timezone.make_aware(order_date)
+            sender_city = request.POST['sender_city']
+            sender_state = request.POST['sender_state']
+            
+            receiver_name = request.POST['receiver_name']
+            receiver_address = request.POST['receiver_address']
+            receiver_contact = request.POST['receiver_contact']
+            receiver_city = request.POST['receiver_city']
+            receiver_state = request.POST['receiver_state']
+            payment_method = request.POST.get('payment_method')
+            
+            if payment_method == 'card':
+                #! implement the payment gateway 
+                pass
+            
+            elif payment_method == 'netbanking':
+                #! implement the payment gateway 
+                pass
+            
+            elif payment_method == 'upi':
+                #! implement the payment gateway 
+                pass
+            
+            elif payment_method == 'cash':
+                # Save the order with the client ID
+                final_order = Data_Records(Sender_Name=sender_name, Sender_Address=sender_address, Sender_Contact_No=sender_contact, Book_date=order_date_aware, Sender_City=sender_city, Receiver_Name=receiver_name, Receiver_Address=receiver_address, Receiver_Contact_No=receiver_contact, Receiver_City=receiver_city, order_type=order_type, sender_state=sender_state, receiver_state=receiver_state, Client_Id=client)
+                final_order.save()
+                return render(request, 'user_dashboard.html')
+        else:
+            current_date = datetime.now().strftime('%Y-%m-%d')
+            sender_states = Branches.objects.values_list('state', flat=True).distinct()
+            receiver_states = Branches.objects.values_list('state', flat=True).distinct()
+            sender_cities = Branches.objects.values_list('city', flat=True).distinct()
+            receiver_cities = Branches.objects.values_list('city', flat=True).distinct()
+            return render(request, 'client_order.html', {'order_date': current_date, 'sender_cities': sender_cities, 'receiver_cities': receiver_cities, 'receiver_states': receiver_states, 'sender_states': sender_states})
     else:
-        current_date = datetime.now().strftime('%Y-%m-%d')
-        sender_cities = Branches.objects.values_list('Address', flat=True).distinct()
-        receiver_cities = Branches.objects.values_list('Address', flat=True).distinct()
-        
-        return render(request, 'client_order.html', {'order_date': current_date, 'sender_cities': sender_cities, 'receiver_cities': receiver_cities})
+        # If the session is not valid (Client_Id is not in the session), redirect to login page
+        return render(request, 'User_login_form.html')

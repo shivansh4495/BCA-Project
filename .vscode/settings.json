@@ -4,5 +4,6 @@
     "cSpell.words": [
         "homeapp"
     ],
-    "editor.minimap.showSlider": "always"
+    "editor.minimap.showSlider": "always",
+    "liveServer.settings.CustomBrowser": "firefox"
 }

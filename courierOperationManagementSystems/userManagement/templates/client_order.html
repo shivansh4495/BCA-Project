@@ -3,76 +3,101 @@
 {% block title %}Create Order{% endblock %}
 
 {% block body %}
-<div class="container" style="margin: 100px 17px 25px;">
-    <h1>Create Order</h1>
-    <form method="post" action="{% url 'userManagement:client_order' %}">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label class="form-label">Sender Name:</label>
-            <input type="text" class="form-control" id="sender_name" name="sender_name" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Sender Address:</label>
-            <textarea class="form-control" id="sender_address" name="sender_address" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Sender Contact:</label>
-            <input type="text" class="form-control" id="sender_contact" name="sender_contact" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Order Type:</label>
-            <select class="form-select" id="order_type" name="order_type" required>
-                <option value="">Select Order Type</option>
-                <option value="courier">Courier</option>
-                <option value="cargo">Cargo</option>
-                <option value="logistics">Logistics</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Order Date:</label>
-            <input type="text" class="form-control" id="order_date" name="order_date" value="{{ order_date }}" readonly>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Sender City:</label>
-            <select class="form-select" id="sender_city" name="sender_city" required>
-                <option value="">Select Sender City</option>
-                {% for city in sender_cities %}
-                    <option value="{{ city }}">{{ city }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Sender State:</label>
-            <input type="text" class="form-control" id="sender_state" name="sender_state" required>
-        </div>
-        <!-- Receiver Information -->
-        <div class="mb-3">
-            <label class="form-label">Receiver Name:</label>
-            <input type="text" class="form-control" id="receiver_name" name="receiver_name" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Receiver Address:</label>
-            <textarea class="form-control" id="receiver_address" name="receiver_address" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Receiver Contact:</label>
-            <input type="text" class="form-control" id="receiver_contact" name="receiver_contact" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Receiver City:</label>
-            <select class="form-select" id="receiver_city" name="receiver_city" required>
-                <option value="">Select Receiver City</option>
-                {% for city in receiver_cities %}
-                    <option value="{{ city }}">{{ city }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Receiver State:</label>
-            <input type="text" class="form-control" id="receiver_state" name="receiver_state" required>
-        </div>
-        <!-- End Receiver Information -->
-        <button type="submit" class="btn btn-primary">Submit Order</button>
-    </form>
+<div class="container d-flex justify-content-center" style="margin-top: 100px;">
+    <div class="col-md-6">
+        <h1>Create Order</h1>
+        <form method="post" action="{% url 'userManagement:client_order' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Sender Name:</label>
+                <input type="text" class="form-control" id="sender_name" name="sender_name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Sender Address:</label>
+                <textarea class="form-control" id="sender_address" name="sender_address" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Sender Contact:</label>
+                <input type="text" class="form-control" id="sender_contact" name="sender_contact" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Sender State:</label>
+                <select class="form-select" id="sender_state" name="sender_state" required>
+                    <option value="">Select Sender State</option>
+                    {% for state in sender_states %}
+                        <option value="{{ state }}">{{ state }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Sender City:</label>
+                <select class="form-select" id="sender_city" name="sender_city" required>
+                    <option value="">Select Sender City</option>
+                    {% for city in sender_cities %}
+                        <option value="{{ city }}">{{ city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Receiver Name:</label>
+                <input type="text" class="form-control" id="receiver_name" name="receiver_name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Receiver Address:</label>
+                <textarea class="form-control" id="receiver_address" name="receiver_address" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Receiver Contact:</label>
+                <input type="text" class="form-control" id="receiver_contact" name="receiver_contact" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Receiver State:</label>
+                <select class="form-select" id="receiver_state" name="receiver_state" required>
+                    <option value="">Select Receiver State</option>
+                    {% for state in receiver_states %}
+                        <option value="{{ state }}">{{ state }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Receiver City:</label>
+                <select class="form-select" id="receiver_city" name="receiver_city" required>
+                    <option value="">Select Receiver City</option>
+                    {% for city in receiver_cities %}
+                        <option value="{{ city }}">{{ city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Order Type:</label>
+                <select class="form-select" id="order_type" name="order_type" required>
+                    <option value="">Select Order Type</option>
+                    <option value="courier">Courier</option>
+                    <option value="cargo">Cargo</option>
+                    <option value="logistics">Logistics</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Order Date:</label>
+                <input type="text" class="form-control" id="order_date" name="order_date" value="{{ order_date }}" readonly>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Select Payment Method:</label>
+                <select class="form-select" id="payment_method" name="payment_method" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="card">Card</option>
+                    <option value="netbanking">Net Banking</option>
+                    <option value="upi">UPI</option>
+                    <option value="cash">Pay on Delivery</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        </form>
+    </div>
 </div>
-{% endblock %}
+<div style="margin: 29px;"></div>
+{% endblock %} 

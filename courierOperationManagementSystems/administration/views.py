@@ -35,7 +35,7 @@ def admin_dashboard(request):
     if admin_id:
         try:
             admdetail = Admin_table.objects.get(Admin_Id=admin_id)
-            username = request.session.get('username')  # Retrieve the username from session
+            username = request.session.get('username')  
             return render(request, 'admin_dashboard.html', {'admdetail': admdetail, 'username': username})
         except Admin_table.DoesNotExist:
             return redirect('admin_login_form')
@@ -55,7 +55,7 @@ def dashboard(request):
         'courier_count': courier_count,
         'cargo_count': cargo_count,
         'logistics_count': logistics_count,
-        'username': request.user.username,  # Assuming you have authentication enabled
+        'username': request.user.username,
     }
     return render(request, 'dashboard.html', context)
 

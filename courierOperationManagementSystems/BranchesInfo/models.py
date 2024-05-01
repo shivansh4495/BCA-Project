@@ -1,6 +1,7 @@
 from django.db import models
 import random
 import string
+from userManagement.models import Client
 
 # Create your models here.
 class Branches(models.Model):
@@ -59,10 +60,12 @@ class Data_Records(models.Model):
     Sender_Address = models.CharField(max_length=100, null=True)
     Sender_Contact_No = models.CharField(max_length=15, null=True)
     Sender_City = models.CharField(max_length=30, null=True)
+    sender_state = models.CharField(max_length=30, null=True)
     Receiver_Name = models.CharField(max_length=100, null=False)
     Receiver_Address = models.CharField(max_length=100, null=True)
     Receiver_Contact_No = models.CharField(max_length=15, null=True)
     Receiver_City = models.CharField(max_length=30, null=True)
+    receiver_state = models.CharField(max_length=30, null=True)
     Book_date = models.DateTimeField(null=False)
     Weight = models.CharField(max_length=10, null=True)
     Price = models.CharField(max_length=10, null=True)
@@ -71,11 +74,13 @@ class Data_Records(models.Model):
     Pin_Number = models.CharField(max_length=10, null=True)
     State = models.CharField(max_length=30, null=True)
     Country = models.CharField(max_length=30, null=True)
-    Sender_Branch_CD = models.IntegerField()
-    Receiver_Branch_CD  = models.IntegerField()
+    Sender_Branch_CD = models.IntegerField(null=True)
+    Receiver_Branch_CD  = models.IntegerField(null=True)
     Type = models.CharField(max_length=50, null=True)
-    Client_Id = models.CharField(max_length=50, null=True)
+    # Client_Id = models.CharField(max_length=50, null=True) 
+    Client_Id = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='client_orders', null=True)
     Alert_Flag = models.CharField(max_length=20, null=True)
+    order_type = models.CharField(max_length=30, null=True)
 
     def save(self, *args, **kwargs):
         if not self.AWBNO:

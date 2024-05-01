@@ -12,7 +12,7 @@ class Client(models.Model):
 
 
 class Login_Info(models.Model):
-    User_Id = models.CharField(max_length=50, null=False)
+    User_Id = models.CharField(max_length=50, null=False) # taking the email address as user id.
     User_Password = models.CharField(max_length=20, null=False)
     User_Type = models.CharField(max_length=7, null=False)
     def __str__(self):
