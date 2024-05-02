@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect, reverse
-from .models import Branch_head, delivery_Boy_details
+from .models import Branch_head, delivery_Boy_details, Data_Records, Branches, PacketAssignmentDetails
 from django.contrib import messages
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import logout
+
+from django.db.models import Count
+from django.utils import timezone
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404 
 
 # Create your views here.
 def branch_login_form(request):
@@ -22,7 +27,8 @@ def branch_login_form(request):
             if delivery_boy:
                 request.session['Delivery_Boy_Id'] = delivery_boy.Delivery_Boy_Id
                 request.session['userid'] = delivery_boy.Delivery_Boy_Username
-                return render(request, "delivery_boy_dashboard.html", {'username': userid})
+                print("Session keys 'Delivery_Boy_Id' and 'delivery boy name' set successfully: ", delivery_boy.Delivery_Boy_Id, delivery_boy.Delivery_Boy_Username)
+                return redirect(reverse('BranchesInfo:delivery_boy_dashboard') + f'?username={delivery_boy.Delivery_Boy_Username}')
             else:
                 messages.error(request, 'Invalid delivery boy credentials.')
         
@@ -32,7 +38,8 @@ def branch_login_form(request):
             if branch_head:
                 request.session['Branch_head_Id'] = branch_head.Branch_head_Id
                 request.session['userid'] = branch_head.Branch_head_Username
-                return render(request, "branch_head_dashboard.html", {'username': userid})
+                print("Session keys 'Branch_head_Id' and 'branch head name' set successfully: ", branch_head.Branch_head_Id, branch_head.Branch_head_Username)
+                return redirect(reverse('BranchesInfo:branch_head_dashboard') + f'?username={branch_head.Branch_head_Username}')
             else:
                 messages.error(request, 'Invalid branch head credentials.')
         
@@ -45,15 +52,45 @@ def branch_login_form(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def logout_view(request):
     logout(request)
+    request.session.flush()
     return redirect('branch_login_form')
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def branch_head_dashboard(request):
-    return render(request, 'branch_head_dashboard.html')
+    # Retrieve the username from the query parameters
+    username = request.GET.get('username')
+    # You may need to adjust this if the username is not passed in the query parameters
+    if username:
+        try:
+            session_id = request.session.get('Branch_head_Id')
+            if session_id is not None:
+                print("Session ID of the branch head from dashboard function:", session_id)
+                # Fetch data related to the branch head and pass it to the dashboard template
+                # Here you can fetch any data related to the branch head
+                return render(request, 'branch_head_dashboard.html', {'username': username})
+        except KeyError:
+            print("Session key not found")
+    # Redirect to the login form if session is not available or invalid
+    return redirect(reverse('BranchesInfo:branch_login_form'))
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def delivery_boy_dashboard(request):
-    return render(request, 'delivery_boy_dashboard.html')
+    # Retrieve the username from the query parameters
+    username = request.GET.get('username')
+    # You may need to adjust this if the username is not passed in the query parameters
+    if username:
+        try:
+            session_id = request.session.get('Delivery_Boy_Id')
+            if session_id is not None:
+                print("Session ID of the delivery boy:", session_id)
+                # Fetch data related to the delivery boy and pass it to the dashboard template
+                # Here you can fetch any data related to the delivery boy
+                return render(request, 'delivery_boy_dashboard.html', {'username': username})
+        except KeyError:
+            print("Session key not found")
+    # Redirect to the login form if session is not available or invalid
+    return redirect(reverse('BranchesInfo:branch_login_form'))
 
 
 def add_delivery_boy(request):
@@ -82,3 +119,18 @@ def add_delivery_boy(request):
         messages.success(request, 'Delivery Boy Successfully.')
         
     return render(request, 'add_delivery_boy.html')  
+
+
+def packet_assignment_details(request):
+    if request.method == "POST":
+        # Process form data if needed
+        pass
+    if 'Branch_head_Id' in request.session:
+        
+        branch_head_id = request.session['Branch_head_Id']
+        
+        sender_cities = Data_Records.objects.values_list('Sender_City', flat=True)
+        return redirect(reverse('BranchesInfo:branch_head_dashboard')) 
+    else:
+        
+        return redirect('BranchesInfo:branch_login_form') 

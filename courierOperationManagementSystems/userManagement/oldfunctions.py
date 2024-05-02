@@ -1,7 +1,5 @@
 
 # client order
-
-# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 # def client_order(request):
 #     # form=MyForm() 
 #     if request.method == 'POST':

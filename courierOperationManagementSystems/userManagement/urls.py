@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
+app_name = 'userManagement'
 
 urlpatterns = [
     path('user_login_form/', views.user_login_form, name='user_login_form'),
