@@ -8,5 +8,5 @@ urlpatterns = [
     path('user_dashboard/', views.user_dashboard, name='user_dashboard'),
     path('signup/', views.signup, name='signup'),
     path('client_order/', views.client_order, name='client_order'),
-    
+    path('calculate-distance/', views.calculate_distance_view, name='calculate_distance'),
 ]

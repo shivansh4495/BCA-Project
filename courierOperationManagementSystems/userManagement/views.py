@@ -10,6 +10,7 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth import logout
 from django.utils import timezone
 import googlemaps
+import json
 from django.http import JsonResponse
 
 def user_login_form(request):
@@ -125,6 +126,32 @@ def client_order(request):
     else:
         # If the session is not valid (Client_Id is not in the session), redirect to login page
         return render(request, 'User_login_form.html')
+
+
+def calculate_distance(sender_address, receiver_address, api_key):
+    gmaps = googlemaps.Client(key=api_key)
+    # Call the distance_matrix method to calculate the distance
+    result = gmaps.distance_matrix(sender_address, receiver_address)
+    if 'rows' in result and result['rows']:
+        distance = result['rows'][0]['elements'][0]['distance']['value']
+        distance_in_km = round(distance / 1000, 1)  # Convert distance from meters to kilometers and round to nearest tenth
+        return distance_in_km
+    else:
+        return None
+
+def calculate_distance_view(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        sender_address = data.get('sender_address')
+        receiver_address = data.get('receiver_address')
+        api_key = 'AIzaSyBfcSK6B7ChIfGOu5h3ZLbrOMe1G7YTNDE'
+        distance = calculate_distance(sender_address, receiver_address, api_key)
+        if distance is not None:
+            return JsonResponse({'distance': distance})
+        else:
+            return JsonResponse({'error': 'Failed to retrieve distance.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=405)
 
 
 def logout_view(request):
