@@ -5,10 +5,12 @@ from datetime import datetime
 from django.http import HttpResponse
 from . forms import MyForm
 from packetTrackingSystem.models import User_Info
-from BranchesInfo.models import Data_Records, Branches
+from BranchesInfo.models import Data_Records, Branches, ChargeDetails
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import logout
 from django.utils import timezone
+import googlemaps
+from django.http import JsonResponse
 
 def user_login_form(request):
     if request.method == 'POST':
@@ -123,6 +125,7 @@ def client_order(request):
     else:
         # If the session is not valid (Client_Id is not in the session), redirect to login page
         return render(request, 'User_login_form.html')
+
 
 def logout_view(request):
     logout(request)

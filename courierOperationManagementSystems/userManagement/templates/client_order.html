@@ -83,6 +83,10 @@
                 <p class="order_type_description" style="font-weight: bold;"><span style="color: red;">* Select Cargo</span> if total order weight is greater than 100kg</p>
             </div>
             <div class="mb-3">
+                <label class="form-label">Approximate Weight (kg):</label>
+                <input type="number" class="form-control" id="weight" name="weight" required>
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Order Date:</label>
                 <input type="date" class="form-control" id="order_date" name="order_date">
             </div>
@@ -100,7 +104,6 @@
                     <option value="18:00">6:00 PM</option>
                 </select>
             </div>
-            
             <div class="mb-3">
                 <label class="form-label">Select Payment Method:</label>
                 <select class="form-select" id="payment_method" name="payment_method" required>
@@ -117,4 +120,5 @@
     </div>
 </div>
 <div style="margin: 29px;"></div>
+
 {% endblock %} 

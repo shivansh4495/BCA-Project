@@ -42,12 +42,13 @@ class delivery_Boy_ID(models.Model):
     Current_ID = models.CharField(max_length=4, primary_key=True) 
 
 class ChargeDetails(models.Model):
-    PlanCode = models.IntegerField(primary_key=True)
-    Distance = models.CharField(max_length=50, null=False)
-    Weight = models.CharField(max_length=10, null=False)
-    Amount = models.CharField(max_length=10, null=False)
+    PlanCode = models.BigAutoField(primary_key=True)
+    Description = models.CharField(max_length=500, null=True)
+    Distance = models.BigIntegerField(null=False)
+    Weight = models.BigIntegerField(null=False)
+    Amount = models.BigIntegerField( null=False)
     def __str__(self):
-        return self.PlanCode
+        return str(self.PlanCode)
 
 class CityDetails(models.Model):
     CityId = models.BigAutoField(primary_key=True)

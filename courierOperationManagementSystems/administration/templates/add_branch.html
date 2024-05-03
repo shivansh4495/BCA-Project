@@ -70,7 +70,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             {% endfor %}
-          {% endif %}
+        {% endif %}
 <div class="container">
     <h2>Add New Branch</h2>
     <form method="POST" action="{% url 'administration:add_branch' %}">
@@ -115,7 +115,6 @@
             <input type="submit" value="Submit">
             <button onclick="cancel()">Cancel</button>
             <button onclick="goToDashboard()">Go to Dashboard</button>
-            <!-- <a href="{% url 'administration:admin_dashboard' %}"><button type="button">Go to Dashboard</button></a> -->
         </div>
     </form>
 </div>
