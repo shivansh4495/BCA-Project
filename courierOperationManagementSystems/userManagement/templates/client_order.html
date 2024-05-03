@@ -76,12 +76,29 @@
                     <option value="">Select Order Type</option>
                     <option value="courier">Courier</option>
                     <option value="cargo">Cargo</option>
-                    <option value="logistics">Logistics</option>
+                    <!-- <option value="logistics">Logistics</option> -->
                 </select>
+                <br>
+                <p class="order_type_description" style="font-weight: bold;"><span style="color: red;">* Select Courier</span> if total order weight is less than 100kg</p>
+                <p class="order_type_description" style="font-weight: bold;"><span style="color: red;">* Select Cargo</span> if total order weight is greater than 100kg</p>
             </div>
             <div class="mb-3">
                 <label class="form-label">Order Date:</label>
-                <input type="text" class="form-control" id="order_date" name="order_date" value="{{ order_date }}" readonly>
+                <input type="date" class="form-control" id="order_date" name="order_date">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Pick-up Time:</label>
+                <select class="form-control" id="order_time" name="order_time">
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="13:00">1:00 PM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                    <option value="17:00">5:00 PM</option>
+                    <option value="18:00">6:00 PM</option>
+                </select>
             </div>
             
             <div class="mb-3">

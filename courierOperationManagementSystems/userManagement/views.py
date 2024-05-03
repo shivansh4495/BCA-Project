@@ -82,8 +82,10 @@ def client_order(request):
             sender_address = request.POST['sender_address']
             sender_contact = request.POST['sender_contact']
             order_type = request.POST['order_type']
-            order_date = request.POST['order_date'] 
-            order_date_aware = timezone.make_aware(order_date)
+            order_date = request.POST['order_date']
+            order_time = request.POST['order_time']  # Retrieve time separately
+            order_datetime_str = f"{order_date}T{order_time}"  # Combine date and time
+            order_date_aware = timezone.make_aware(datetime.strptime(order_datetime_str, "%Y-%m-%dT%H:%M")) 
             sender_city = request.POST['sender_city']
             sender_state = request.POST['sender_state']
             
@@ -112,12 +114,12 @@ def client_order(request):
                 final_order.save()
                 return redirect('userManagement:user_dashboard')
         else:
-            current_date = datetime.now().strftime('%Y-%m-%d')
+            # current_date = datetime.now().strftime('%Y-%m-%d')  
             sender_states = Branches.objects.values_list('state', flat=True).distinct()
             receiver_states = Branches.objects.values_list('state', flat=True).distinct()
             sender_cities = Branches.objects.values_list('city', flat=True).distinct()
             receiver_cities = Branches.objects.values_list('city', flat=True).distinct()
-            return render(request, 'client_order.html', {'order_date': current_date, 'sender_cities': sender_cities, 'receiver_cities': receiver_cities, 'receiver_states': receiver_states, 'sender_states': sender_states})
+            return render(request, 'client_order.html', {'sender_cities': sender_cities, 'receiver_cities': receiver_cities, 'receiver_states': receiver_states, 'sender_states': sender_states})
     else:
         # If the session is not valid (Client_Id is not in the session), redirect to login page
         return render(request, 'User_login_form.html')

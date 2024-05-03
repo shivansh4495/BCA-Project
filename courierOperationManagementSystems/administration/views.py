@@ -11,14 +11,16 @@ def admin_login_form(request):
         username = request.POST['userid']
         password = request.POST['password']
         try:
-            obj = Admin_table.objects.get(Admin_Name=username, Admin_Password=password)
+            # obj = Admin_table.objects.get(Admin_Name=username, Admin_Password=password) 
+            admin_table = Admin_table.objects.filter(Admin_Name=username, Admin_Password=password).first()
             # request.session['Admin_Id']=username
-            request.session['Admin_Id'] = obj.Admin_Id  # Set the Admin_Id from the retrieved object
-            request.session['username'] = obj.Admin_Name  
-            print("Session key 'Admin_Id' set successfully:", obj.Admin_Id)  # For debugging
+            request.session['Admin_Id'] = admin_table.Admin_Id  # Set the Admin_Id from the retrieved object
+            request.session['username'] = admin_table.Admin_Name  
+            print("Session key 'Admin_Id' set successfully:", admin_table.Admin_Id)  # For debugging
             
-            print("Session key 'Admin_Id' set successfully:", username)  # Add this line for debugging
-            return render(request, 'admin_dashboard.html', {'username': username})
+            print("Session key 'Admin_Id' set successfully:", admin_table.Admin_Name)  # Add this line for debugging
+            # return render(request, 'admin_dashboard.html', {'username': username})
+            return redirect(reverse('administration:admin_dashboard') + f'?username={admin_table.Admin_Name}')
         except Admin_table.DoesNotExist:
             print("Login failed: Invalid User name or Password")
             messages.success(request, 'Invalid User name or Password')
@@ -31,16 +33,16 @@ def logout_view(request):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_dashboard(request):
-    admin_id = request.session.get('Admin_Id')
-    if admin_id:
+    username = request.GET.get('username')
+    if username:
         try:
-            admdetail = Admin_table.objects.get(Admin_Id=admin_id)
-            username = request.session.get('username')  
-            return render(request, 'admin_dashboard.html', {'admdetail': admdetail, 'username': username})
-        except Admin_table.DoesNotExist:
-            return redirect('admin_login_form')
-    else:
-        return redirect('admin_login_form')
+            session_id = request.session.get('Admin_Id')
+            if session_id is not None:
+                print("Session ID of the branch head from dashboard function:", session_id)
+                return render(request, 'admin_dashboard.html', {'username': username})
+        except KeyError:
+            print("Session key not found")
+    return redirect(reverse('administration:admin_login_form'))
 
 
 
@@ -57,7 +59,7 @@ def dashboard(request):
         'logistics_count': logistics_count,
         'username': request.user.username,
     }
-    return render(request, 'dashboard.html', context)
+    return render(request, 'administration:admin_dashboard.html', context)
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def add_branch(request):
@@ -76,3 +78,7 @@ def add_branch(request):
         new_branch.save()
         messages.success(request,'branch saved')
     return render(request,"add_branch.html")
+
+
+def ChargeDetails(request):
+    return redirect(reverse('administration:ChargeDetails'))
