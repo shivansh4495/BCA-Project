@@ -15,7 +15,7 @@ from BranchesInfo.models import Data_Records
 
 # def generate_qr_code(request, awbno):
 #     packet = get_object_or_404(Data_Record, AWBNO=awbno)
-#     qr_data = f"AWBNO: {packet.AWBNO}"  # Include AWBNO in the QR data
+#     qr_data = f"AWBNO: {packet.AWBNO}"  
 #     qr = qrcode.QRCode(
 #         version=1,
 #         error_correction=qrcode.constants.ERROR_CORRECT_L,

@@ -144,7 +144,7 @@ def calculate_distance_view(request):
         data = json.loads(request.body)
         sender_address = data.get('sender_address')
         receiver_address = data.get('receiver_address')
-        api_key = 'AIzaSyBfcSK6B7ChIfGOu5h3ZLbrOMe1G7YTNDE'
+        api_key = 'YOUR-API-KEY'   #! Remember to remove your API key, daily limit 100 requests after that charges will apply
         distance = calculate_distance(sender_address, receiver_address, api_key)
         if distance is not None:
             return JsonResponse({'distance': distance})
