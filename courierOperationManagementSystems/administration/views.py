@@ -105,18 +105,18 @@ def add_branch(request):
 def charge_details_view(request):
     if request.method == 'POST':
         description = request.POST.get('description')
-        distance = request.POST.get('distance')
+        # distance = request.POST.get('distance')
         weight = request.POST.get('weight')
         amount = request.POST.get('amount')
         
         print("Description:", description)
-        print("Distance:", distance)
+        # print("Distance:", distance)
         print("Weight:", weight)
         print("Amount:", amount)
         try:
             new_charge_details = ChargeDetails.objects.create(
                 Description=description,
-                Distance=distance,
+                # Distance=distance,
                 Weight=weight,
                 Amount=amount
             )

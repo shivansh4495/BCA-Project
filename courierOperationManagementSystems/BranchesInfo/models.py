@@ -44,9 +44,8 @@ class delivery_Boy_ID(models.Model):
 class ChargeDetails(models.Model):
     PlanCode = models.BigAutoField(primary_key=True)
     Description = models.CharField(max_length=500, null=True)
-    Distance = models.BigIntegerField(null=False)
-    Weight = models.BigIntegerField(null=False)
-    Amount = models.BigIntegerField( null=False)
+    Weight = models.DecimalField(max_digits=10, decimal_places=2, null=False)
+    Amount = models.DecimalField(max_digits=15, decimal_places=2, null=False)
     def __str__(self):
         return str(self.PlanCode)
 

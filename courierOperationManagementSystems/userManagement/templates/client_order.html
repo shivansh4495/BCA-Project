@@ -153,6 +153,12 @@
                     var response = JSON.parse(xhr.responseText);
                     // Update the distance field with the calculated distance
                     document.getElementById('distance').value = response.distance;
+                    
+                    // Calculate total price after getting distance
+                    var total_price = parseFloat(response.distance) * parseFloat(weight);
+                    
+                    // Update the total price field
+                    document.getElementById('total_price').value = total_price.toFixed(2);
                 } else {
                     console.error('Error:', xhr.status);
                 }

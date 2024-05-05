@@ -13,6 +13,7 @@ import googlemaps
 import json
 from django.http import JsonResponse
 
+
 def user_login_form(request):
     if request.method == 'POST':
         username = request.POST.get('userid')
@@ -144,12 +145,41 @@ def calculate_distance_view(request):
         data = json.loads(request.body)
         sender_address = data.get('sender_address')
         receiver_address = data.get('receiver_address')
-        api_key = 'YOUR-API-KEY'   #! Remember to remove your API key, daily limit 100 requests after that charges will apply
+        api_key = 'AIzaSyAq23BWf_3ZAOZvqyGZlUzfaOA9WrgUk_w'   #! Remember to remove your API key, daily limit 100 requests after that charges will apply
         distance = calculate_distance(sender_address, receiver_address, api_key)
         if distance is not None:
             return JsonResponse({'distance': distance})
         else:
             return JsonResponse({'error': 'Failed to retrieve distance.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=405)
+
+
+
+def calculate_price_view(request):
+    if request.method == 'POST':
+        # Get weight from POST data
+        weight = float(request.POST.get('weight'))
+
+        # Fetch distance from the calculate_distance_view function
+        # Assuming the endpoint is named 'calculate_distance_view' and accessible via POST request
+        distance_response = calculate_distance_view(request)
+        if distance_response.status_code == 200:
+            distance_data = distance_response.json()
+            distance = distance_data.get('distance')
+        else:
+            return JsonResponse({'error': 'Failed to calculate distance.'}, status=400)
+
+        # Fetch the ChargeDetails object based on the weight
+        charge_details = ChargeDetails.objects.filter(Weight__gte=weight).order_by('Weight').first()
+        
+        if charge_details:
+            price_per_km = charge_details.Amount
+            # Calculate the total price based on distance and price per kilometer
+            total_price = distance * price_per_km
+            return JsonResponse({'total_price': total_price})
+        else:
+            return JsonResponse({'error': 'Failed to calculate price.'}, status=400)
     else:
         return JsonResponse({'error': 'Only POST requests are allowed.'}, status=405)
 
