@@ -1,19 +1,31 @@
+<!-- packet_assignment_details.html -->
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Packet Assignment Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Packet Assignment Details</h2>
-    <ul>
-        {% for city in sender_cities %}
-            <li>{{ city }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'BranchesInfo:branch_head_dashboard' %}">Go to Branch Head Dashboard</a>
-    <a href="{{ branch_login_form_url }}">Branch Login Form</a>
+    <div class="container">
+        <h2 class="mt-4">Packet Assignment Details</h2>
+        <form action="" method="post" class="mt-4">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="awbno" class="form-label">Select AWBNO:</label>
+                {{ form.awbno }}
+            </div>
+            <div class="mb-3">
+                <label for="delivery_boy" class="form-label">Select Delivery Boy:</label>
+                {{ form.delivery_boy }}
+            </div>
+            <button type="submit" class="btn btn-primary">Assign Packet</button>
+        </form>
+        <a href="{% url 'BranchesInfo:branch_head_dashboard' %}" class="btn btn-secondary mt-3">Go back to Branch Head Dashboard</a>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from . models import Client, Login_Info
 from django.contrib import messages
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from . forms import MyForm
 from packetTrackingSystem.models import User_Info
 from BranchesInfo.models import Data_Records, Branches, ChargeDetails
@@ -115,9 +115,9 @@ def client_order(request):
             
             elif payment_method == 'cash':
                 # Save the order with the client ID
-                final_order = Data_Records(Sender_Name=sender_name, Sender_Address=sender_address, Sender_Contact_No=sender_contact, Book_date=order_date_aware, Sender_City=sender_city, Receiver_Name=receiver_name, Receiver_Address=receiver_address, Receiver_Contact_No=receiver_contact, Receiver_City=receiver_city, order_type=order_type, sender_state=sender_state, receiver_state=receiver_state, Client_Id=client, Weight=weight, Distance=distance, Price=total_price)
+                final_order = Data_Records(Sender_Name=sender_name, Sender_Address=sender_address, Sender_Contact_No=sender_contact, Book_date=order_date_aware, Sender_City=sender_city, Receiver_Name=receiver_name, Receiver_Address=receiver_address, Receiver_Contact_No=receiver_contact, Receiver_City=receiver_city, order_type=order_type, sender_state=sender_state, receiver_state=receiver_state, Client_Id=client, Weight=weight, Distance=distance, Price=total_price, Payment_Method=payment_method)
                 final_order.save()
-                return redirect('userManagement:user_dashboard')
+                return HttpResponseRedirect(reverse('userManagement:user_dashboard') + f'?username={client.Client_Name}')
         else:
             # current_date = datetime.now().strftime('%Y-%m-%d')  
             sender_states = Branches.objects.values_list('state', flat=True).distinct()

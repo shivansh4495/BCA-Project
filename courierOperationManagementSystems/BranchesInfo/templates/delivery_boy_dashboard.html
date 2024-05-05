@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Expires" content="0"> -->
     
     <title>Sidebar Dashboard</title>
     <!-- Bootstrap CSS -->
@@ -62,42 +62,168 @@
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-                <!-- User Info -->
                 <div class="user-info">
                     Welcome, {{ username }}
-                    <!-- You can replace `{{ username }}` with the actual username variable you pass from the Django view -->
                 </div>
-
-                <!-- Orders Link with Dropdown -->
-                <a href="#" class="toggle-dropdown"><i class="fas fa-shopping-cart"></i> Orders <i class="fas fa-chevron-down float-end"></i></a>
-                <div class="dropdown">
-                    <a href="#" class="dropdown-item">New Orders</a>
-                    <a href="#" class="dropdown-item">In Progress Orders</a>
-                    <a href="#" class="dropdown-item">Delivered Orders</a>
-                </div>
-
-                <!-- Profile Management Link -->
-                <a href="#"><i class="fas fa-user"></i> Profile Management</a>
-
-                <!-- Feedback Link -->
-                <a href="#"><i class="fas fa-comment"></i> Feedback</a>
-
-                <!-- Logout Button -->
+                
+                <!-- <a href="#"><i class="fas fa-user"></i> Profile Management</a> -->
+                
+                
                 <a href="{% url 'BranchesInfo:branch_login_form'%}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
 
-            <!-- Current Order Details -->
+            
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="order-details">
                     <h2>allocated Order Details</h2>
+                    <table class="table table-striped-columns">
+                        <thead>
+                            <tr>
+                                <th>AWBNO</th>
+                                <th style="padding-left: 40px;">Assign Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for packet in packets_allotted %}
+                            <tr>
+                                <td>{{ packet.AWBNO }}</td>
+                                <td style="padding-left: 40px;">{{ packet.Assign_DT }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
                 <div class="order-details">
-                    <h2>option to end end user email about the delivery.</h2>
-                    
+                    <h2>Detailed Orders</h2>
+                    <div style="overflow-x: auto;">
+                    <table class="table table-striped-columns">
+                        <thead>
+                            <tr>
+                                <th style="padding-left: 40px;">AWBNO</th>
+                                <th style="padding-left: 40px;">Order Date</th>
+                                <th style="padding-left: 40px;">Sender Name</th>
+                                <th style="padding-left: 40px;">Sender Contact No</th>
+                                <th style="padding-left: 40px;">Sender Address</th>
+                                <th style="padding-left: 40px;">Order type</th>
+                                <th style="padding-left: 40px;">Receiver Name</th>
+                                <th style="padding-left: 40px;">Receiver Contact No</th>
+                                <th style="padding-left: 40px;">Receiver Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for packet_detail in packets_details %}
+                            <tr>
+                                <td style="padding-left: 40px;">{{ packet_detail.AWBNO }}</td>
+                                <td style="padding-left: 40px;">{{ packet_detail.Book_date }}</td>
+                                <td style="padding-left: 40px;">{{ packet_detail.Sender_Name }}</td>
+                                <td style="padding-left: 40px;">{{ packet_detail.Sender_Contact_No }}</td>
+                                <td style="padding-left: 40px;">{{ packet_detail.Sender_Address }}</td>
+                                <td style="padding-left: 40px;">{{ packet_detail.order_type }}</td>
+                                <td style="padding-left: 40px;">{{ packet_detail.Receiver_Name }}</td>
+                                <td style="padding-left: 40px;">{{ packet_detail.Receiver_Contact_No }}</td>
+                                <td style="padding-left: 40px;">{{ packet_detail.Receiver_Address }}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
+            </div>
                 <div class="order-details">
                     <h2>Barcode scan to update the packet to the tracking facility</h2>
-                    
+                    <div style="overflow-x: auto;">
+                        <table class="table table-striped-columns">
+                            <thead>
+                                <tr>
+                                    <th style="padding-left: 40px;">AWBNO</th>
+                                    <th style="padding-left: 40px;">Order Date</th>
+                                    <th style="padding-left: 40px;">Sender Name</th>
+                                    <th style="padding-left: 40px;">Sender Contact No</th>
+                                    <th style="padding-left: 40px;">Sender Address</th>
+                                    <th style="padding-left: 40px;">Order type</th>
+                                    <th style="padding-left: 40px;">Receiver Name</th>
+                                    <th style="padding-left: 40px;">Receiver Contact No</th>
+                                    <th style="padding-left: 40px;">Receiver Address</th>
+                                    <th style="padding-left: 40px;">Generate QR</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for packet_detail in packets_details %}
+                                <tr>
+                                    <td style="padding-left: 40px;">{{ packet_detail.AWBNO }}</td>
+                                    <td style="padding-left: 40px;">{{ packet_detail.Book_date }}</td>
+                                    <td style="padding-left: 40px;">{{ packet_detail.Sender_Name }}</td>
+                                    <td style="padding-left: 40px;">{{ packet_detail.Sender_Contact_No }}</td>
+                                    <td style="padding-left: 40px;">{{ packet_detail.Sender_Address }}</td>
+                                    <td style="padding-left: 40px;">{{ packet_detail.order_type }}</td>
+                                    <td style="padding-left: 40px;">{{ packet_detail.Receiver_Name }}</td>
+                                    <td style="padding-left: 40px;">{{ packet_detail.Receiver_Contact_No }}</td>
+                                    <td style="padding-left: 40px;">{{ packet_detail.Receiver_Address }}</td>
+                                    <td style="padding-left: 40px;">
+                                        <form id="generateQRForm" action="{% url 'packetTrackingSystem:generate_qr' %}"method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="awbno" id="awbnoInput" value="{{ packet_detail.AWBNO }}">
+                                            <button type="submit">Generate QR</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="order-details">
+                    <h2>Live Updates</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="table table-striped-columns">
+                            <thead>
+                                <tr>
+                                    <th>AWBNO</th>
+                                    <th>Transit Status</th>
+                                    <th>Update Location</th>
+                                    <th>Last Update Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for live in live_track %}
+                                <tr>
+                                    <td>{{ live.AWBNO }}</td>
+                                    <td>{{ live.transit_status }}</td>
+                                    <td>{{ live.update_location }}</td>
+                                    <td>{{ live.last_update_time }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                This
+                <div class="update details">
+                    <h2>Update Order Status</h2>
+                    <form id="update-form">
+                        {% csrf_token %}
+                        <label for="awbno">Select AWBNO:</label>
+                        <select name="awbno" id="awbno">
+                            {% for packet in packets_allotted %}
+                                <option value="{{ packet.AWBNO }}">{{ packet.AWBNO }}</option>
+                            {% endfor %}
+                        </select>
+                        <div>
+                            <label for="transit_status">Transit Status:</label>
+                            <select name="transit_status" id="transit_status">
+                                <option value="In Transit">In Transit</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Not Delivered">Not Delivered</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="update_location">Update Location:</label>
+                            <input type="text" name="update_location" id="update_location" required>
+                        </div>
+                        <button type="submit">Update</button>
+                    </form>
                 </div>
             </main>
         </div>
@@ -113,7 +239,53 @@
                     dropdown.classList.toggle('active');
                 });
             });
+    
+            // Add event listener to each "Generate QR" button
+            const generateQRButtons = document.querySelectorAll('.generate-qr-button');
+            generateQRButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Get the AWBNO from the corresponding row
+                    const awbno = this.dataset.awbno;
+                    // Update the value of the hidden input field in the form
+                    document.getElementById('awbnoInput').value = awbno;
+                    // Submit the form
+                    document.getElementById('generateQRForm').submit();
+                });
+            });
+    
+            // Get the URL for updating order status
+            const updateOrderStatusURL = "{% url 'BranchesInfo:update_packet_status' %}";
+    
+            // Add event listener to the update form
+            document.getElementById('update-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+                
+                // Collect form data
+                var formData = new FormData(this);
+                
+                // Send AJAX request
+                fetch(updateOrderStatusURL, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Success message or update UI accordingly
+                        console.log('Order status updated successfully');
+                    } else {
+                        // Error message or handle errors
+                        console.error('Failed to update order status');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
         });
     </script>
+    
 </body>
 </html> 

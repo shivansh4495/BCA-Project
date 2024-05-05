@@ -18,7 +18,8 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Sender Contact:</label>
-                <input type="text" class="form-control" id="sender_contact" name="sender_contact" required>
+                <input type="text" class="form-control" id="sender_contact" name="sender_contact" pattern="[0-9]{10}" title="Please enter a 10-digit contact number" required>
+                <div class="invalid-feedback">Please enter a 10-digit contact number.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Sender State:</label>
@@ -49,7 +50,8 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Receiver Contact:</label>
-                <input type="text" class="form-control" id="receiver_contact" name="receiver_contact" required>
+                <input type="text" class="form-control" id="receiver_contact" name="receiver_contact" pattern="[0-9]{10}" title="Please enter a 10-digit contact number" required>
+                <div class="invalid-feedback">Please enter a 10-digit contact number.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Receiver State:</label>

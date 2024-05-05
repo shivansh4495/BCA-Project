@@ -1,7 +1,5 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
+# from BranchesInfo.models import delivery_Boy_details
 
 # Create your models here.
 class User_Info(models.Model):
@@ -39,3 +37,22 @@ class Rate_Plane_Details(models.Model):
     
     def __str__(self):
         return self.Plan_code
+
+class Qr_Details(models.Model):
+    awbno = models.CharField(max_length=100)
+    barcode_image = models.ImageField(upload_to='qr_codes/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Barcode {self.id}'
+
+
+class Live_Updates(models.Model):
+    AWBNO = models.CharField(max_length=50)
+    transit_status = models.CharField(max_length=100, default='Not Picked Up From Source.')
+    update_location = models.CharField(max_length=100)
+    last_update_time = models.DateTimeField(null=False)
+    Delivery_Boy_Name = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return f"{self.AWBNO} - {self.transit_status}"

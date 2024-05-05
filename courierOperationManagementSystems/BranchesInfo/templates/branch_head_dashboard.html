@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     
     <title>Sidebar Dashboard</title>
     <!-- Bootstrap CSS -->
@@ -79,19 +76,55 @@
                 <!-- Logout Button -->
                 <a href="{% url 'BranchesInfo:branch_login_form'%}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
-
-            <!-- Current Order Details -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="order-details">
-                    <h2>Total number of orders in your Branch</h2>
+                    <h2>Total number of orders in your Branch: {{orders.count}}</h2>
+                </div>
+                <div class="order-details">
+                    <h2>Unassigned Orders</h2>
+                    <table class="table table table-striped-columns">
+                        <thead>
+                            <tr>
+                                <th>AWBNO</th>
+                                <th>Sender Name</th>
+                                <th>Sender Address</th>
+                                <th>Sender Contact Number</th>
+                                <th>Receiver Name</th>
+                                <th>Receiver Address</th>
+                                <th>Receiver Contact Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{ order.AWBNO }}</td>
+                                <td>{{ order.Sender_Name }}</td>
+                                <td>{{order.Sender_Address}}</td>
+                                <td>{{order.Sender_Contact_No}}</td>
+                                <td>{{order.Receiver_Name}}</td>
+                                <td>{{order.Receiver_Address}}</td>
+                                <td>{{order.Receiver_Contact_No}}</td>
+                                <td>
+                                    <form action="{% url 'BranchesInfo:delete_order' order.AWBNO %}?username={{ username }}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{% url 'BranchesInfo:packet_assignment_details' %}" method="post">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <button type="submit" class="btn btn-info">Allocate Packet</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
                 </div>
                 <div class="order-details">
                     <h2>Assigned Orders</h2>
                     
-                </div>
-                <div class="order-details">
-                    <h2>Unassigned Orders</h2>
-                    <a href="{% url 'BranchesInfo:packet_assignment_details' %}">Allocate Packet</a>
                 </div>
                 <div class="order-details">
                     <h2>Un-Delivered/ In-Transit Orders</h2>
@@ -107,6 +140,29 @@
                 </div>
                 <div class="order-details">
                     <h2>all delivery boy details</h2>
+                    <div class="order-details">
+                        <h2>Delivery Boys</h2>
+                        <table class="table table table-striped-columns">
+                            <thead>
+                                <tr>
+                                    <th>Delivery Boy Name</th>
+                                    <th>Contact Number</th>
+                                    <th>Delivery Boy Area</th>
+                                    <!-- <th>Number of alloted Packets</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for delivery_boy in delivery_boys %}
+                                <tr>
+                                    <td>{{ delivery_boy.Delivery_Boy_Name }}</td>
+                                    <td>{{ delivery_boy.Delivery_Boy_contact_No }}</td>
+                                    <td>{{ delivery_boy.Delivery_Boy_Area }}</td>
+                                    <!-- <td>{{ delivery_boy.Number_Of_Alloted_Packets }}</td> -->
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                     
                 </div>
             </main>

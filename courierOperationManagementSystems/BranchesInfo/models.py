@@ -30,13 +30,16 @@ class PacketAssignmentDetails(models.Model):
 class delivery_Boy_details(models.Model):
     Delivery_Boy_Id = models.BigAutoField(primary_key=True)
     Delivery_Boy_Name = models.CharField(max_length=50, null=False)
+    Number_Of_Alloted_Packets = models.IntegerField(null=True)
     Delivery_Boy_Username = models.CharField(max_length=50, null=False)
     Delivery_Boy_Password = models.CharField(max_length=50, null=False)
     Delivery_Boy_Address = models.CharField(max_length=100, null=False)
     Delivery_Boy_contact_No = models.IntegerField(null=False)
     Delivery_Boy_Area = models.CharField(max_length=30, null=True) #! use as branch name 
     Branch_CD = models.IntegerField(null=False)
-    User_Type=models.CharField(max_length=20, null=False)
+    User_Type=models.CharField(max_length=20, null=False) 
+    def __str__(self):
+        return self.Delivery_Boy_Name
 
 class delivery_Boy_ID(models.Model):
     Current_ID = models.CharField(max_length=4, primary_key=True) 
@@ -78,7 +81,8 @@ class Data_Records(models.Model):
     Sender_Branch_CD = models.IntegerField(null=True)
     Receiver_Branch_CD  = models.IntegerField(null=True)
     Type = models.CharField(max_length=50, null=True)
-    # Client_Id = models.CharField(max_length=50, null=True) 
+    Payment_Method = models.CharField(max_length=50)
+    
     Client_Id = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='client_orders', null=True)
     Alert_Flag = models.CharField(max_length=20, null=True)
     order_type = models.CharField(max_length=30, null=True)

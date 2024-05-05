@@ -21,7 +21,12 @@ def admin_login_form(request):
             return redirect(reverse('administration:admin_dashboard') + f'?username={admin_table.Admin_Name}')
         except Admin_table.DoesNotExist:
             print("Login failed: Invalid User name or Password")
-            messages.success(request, 'Invalid User name or Password')
+            messages.error(request, 'Invalid User name or Password')
+            return render(request, 'admin_login_form.html', {'error_message': 'Invalid User name or Password'})
+        except Exception as e:
+            print("An error occurred:", str(e))
+            messages.error(request, 'An error occurred. Please try again later.')
+            return render(request, 'admin_login_form.html', {'error_message': 'An error occurred. Please try again later.'})
     return render(request, 'admin_login_form.html')
 
 
