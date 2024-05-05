@@ -68,6 +68,7 @@ class Data_Records(models.Model):
     receiver_state = models.CharField(max_length=30, null=True)
     Book_date = models.DateTimeField(null=False)
     Weight = models.CharField(max_length=10, null=True)
+    Distance = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     Price = models.CharField(max_length=10, null=True)
     POD_Flag = models.CharField(max_length=20, null=True)
     Print_Flag = models.CharField(max_length=20, null=True)

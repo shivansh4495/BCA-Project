@@ -73,32 +73,33 @@ def client_order(request):
     client_id = request.session.get('Client_Id')
     print("Session key 'Client_Id' value:", client_id)
     
-    # Check if the session is valid (Client_Id exists in the session)
     if client_id:
         try:
-            # Retrieve the client using Client_Email_Id
+            
             client = Client.objects.get(Client_Id=client_id)
         except Client.DoesNotExist:
-            # Handle the case where the client does not exist
-            return render(request, 'User_login_form.html') # Redirect to login page
+            
+            return render(request, 'User_login_form.html') 
         if request.method == 'POST':
             sender_name = request.POST['sender_name']
             sender_address = request.POST['sender_address']
             sender_contact = request.POST['sender_contact']
             order_type = request.POST['order_type']
             order_date = request.POST['order_date']
-            order_time = request.POST['order_time']  # Retrieve time separately
-            order_datetime_str = f"{order_date}T{order_time}"  # Combine date and time
+            order_time = request.POST['order_time']  
+            order_datetime_str = f"{order_date}T{order_time}"
             order_date_aware = timezone.make_aware(datetime.strptime(order_datetime_str, "%Y-%m-%dT%H:%M")) 
             sender_city = request.POST['sender_city']
             sender_state = request.POST['sender_state']
-            
+            weight = request.POST['weight']
+            distance = request.POST['distance']
             receiver_name = request.POST['receiver_name']
             receiver_address = request.POST['receiver_address']
             receiver_contact = request.POST['receiver_contact']
             receiver_city = request.POST['receiver_city']
             receiver_state = request.POST['receiver_state']
             payment_method = request.POST.get('payment_method')
+            total_price = request.POST['total_price']
             
             if payment_method == 'card':
                 #! implement the payment gateway 
@@ -114,7 +115,7 @@ def client_order(request):
             
             elif payment_method == 'cash':
                 # Save the order with the client ID
-                final_order = Data_Records(Sender_Name=sender_name, Sender_Address=sender_address, Sender_Contact_No=sender_contact, Book_date=order_date_aware, Sender_City=sender_city, Receiver_Name=receiver_name, Receiver_Address=receiver_address, Receiver_Contact_No=receiver_contact, Receiver_City=receiver_city, order_type=order_type, sender_state=sender_state, receiver_state=receiver_state, Client_Id=client)
+                final_order = Data_Records(Sender_Name=sender_name, Sender_Address=sender_address, Sender_Contact_No=sender_contact, Book_date=order_date_aware, Sender_City=sender_city, Receiver_Name=receiver_name, Receiver_Address=receiver_address, Receiver_Contact_No=receiver_contact, Receiver_City=receiver_city, order_type=order_type, sender_state=sender_state, receiver_state=receiver_state, Client_Id=client, Weight=weight, Distance=distance, Price=total_price)
                 final_order.save()
                 return redirect('userManagement:user_dashboard')
         else:
@@ -158,24 +159,17 @@ def calculate_distance_view(request):
 
 def calculate_price_view(request):
     if request.method == 'POST':
-        # Get weight from POST data
         weight = float(request.POST.get('weight'))
-
-        # Fetch distance from the calculate_distance_view function
-        # Assuming the endpoint is named 'calculate_distance_view' and accessible via POST request
         distance_response = calculate_distance_view(request)
         if distance_response.status_code == 200:
             distance_data = distance_response.json()
             distance = distance_data.get('distance')
         else:
             return JsonResponse({'error': 'Failed to calculate distance.'}, status=400)
-
-        # Fetch the ChargeDetails object based on the weight
         charge_details = ChargeDetails.objects.filter(Weight__gte=weight).order_by('Weight').first()
         
         if charge_details:
             price_per_km = charge_details.Amount
-            # Calculate the total price based on distance and price per kilometer
             total_price = distance * price_per_km
             return JsonResponse({'total_price': total_price})
         else:
