@@ -38,14 +38,6 @@ class Rate_Plane_Details(models.Model):
     def __str__(self):
         return self.Plan_code
 
-class Qr_Details(models.Model):
-    awbno = models.CharField(max_length=100)
-    barcode_image = models.ImageField(upload_to='qr_codes/')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'Barcode {self.id}'
-
 
 class Live_Updates(models.Model):
     AWBNO = models.CharField(max_length=50)

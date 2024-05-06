@@ -133,7 +133,7 @@
     <form id="frmlogin" onsubmit="event.preventDefault();validate();" class="form-group"  method="POST" action="{% url 'BranchesInfo:branch_login_form' %}">
           {% csrf_token %}
 
-            {% csrf_token %}
+            
             <div class="form-group">
                 <label >Username</label>
                 <input type="text" id="userid" name="userid" required>

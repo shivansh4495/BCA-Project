@@ -4,7 +4,7 @@ from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponseRedirect
 from . forms import MyForm
-from packetTrackingSystem.models import User_Info
+from packetTrackingSystem.models import User_Info, Live_Updates
 from BranchesInfo.models import Data_Records, Branches, ChargeDetails
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import logout
@@ -40,7 +40,10 @@ def user_dashboard(request):
             print("Session ID of the user :", session_id)
             # Fetch data related to the user and pass it to the dashboard template
             user_orders = Data_Records.objects.filter(Client_Id=session_id)
-            return render(request, 'user_dashboard.html', {'user_orders': user_orders, 'username': username})
+            
+            # Fetch live updates related to the user's orders
+            live_updates = Live_Updates.objects.filter(AWBNO__in=[order.AWBNO for order in user_orders])
+            return render(request, 'user_dashboard.html', {'user_orders': user_orders, 'username': username, 'live_updates': live_updates})
     except KeyError:
         print("Session key not found")
     # Redirect to the login form if session is not available or invalid

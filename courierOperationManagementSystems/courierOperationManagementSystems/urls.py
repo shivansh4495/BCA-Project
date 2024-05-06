@@ -30,5 +30,4 @@ urlpatterns = [
     path("BranchesInfo/", include(('BranchesInfo.urls','BranchesInfo'), namespace='BranchesInfo')),
     path("packetTrackingSystem", include(('packetTrackingSystem.urls','packetTrackingSystem'), namespace='packetTrackingSystem')),
     path('captcha/', include('captcha.urls')),
-]
-urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

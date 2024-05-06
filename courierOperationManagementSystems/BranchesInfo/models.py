@@ -2,6 +2,9 @@ from django.db import models
 import random
 import string
 from userManagement.models import Client
+from django.conf import settings
+import os
+
 
 # Create your models here.
 class Branches(models.Model):
@@ -39,7 +42,7 @@ class delivery_Boy_details(models.Model):
     Branch_CD = models.IntegerField(null=False)
     User_Type=models.CharField(max_length=20, null=False) 
     def __str__(self):
-        return self.Delivery_Boy_Name
+        return f"{self.Delivery_Boy_Id} - {self.Delivery_Boy_Name}"
 
 class delivery_Boy_ID(models.Model):
     Current_ID = models.CharField(max_length=4, primary_key=True) 
@@ -118,3 +121,14 @@ class Branch_head(models.Model):
 
     def __str__(self):
         return f"{self.Branch_head_Id} - {self.Branch_head_Name}"
+
+def qr_image_path(instance, filename):
+    return os.path.join('qr_codes', f'barcode_{instance.awbno}.png')
+
+class Qr_Details(models.Model):
+    awbno = models.CharField(max_length=100)
+    Qr_image = models.ImageField(upload_to=qr_image_path)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Barcode {self.id}'

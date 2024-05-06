@@ -59,6 +59,15 @@
     </style>
 </head>
 <body>
+    <div class="message-section">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-3 col-lg-2 d-md-block sidebar">
@@ -161,11 +170,40 @@
                                     <td style="padding-left: 40px;">{{ packet_detail.Receiver_Contact_No }}</td>
                                     <td style="padding-left: 40px;">{{ packet_detail.Receiver_Address }}</td>
                                     <td style="padding-left: 40px;">
-                                        <form id="generateQRForm" action="{% url 'packetTrackingSystem:generate_qr' %}"method="post">
+                                        <form id="generateQRForm" action="{% url 'BranchesInfo:generate_and_store_qr' %}"method="post">
                                             {% csrf_token %}
                                             <input type="hidden" name="awbno" id="awbnoInput" value="{{ packet_detail.AWBNO }}">
                                             <button type="submit">Generate QR</button>
                                         </form>
+                                    </td>
+                                    
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="order-details">
+                    <h2>QR Code Display</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="table table-striped-columns">
+                            <thead>
+                                <tr>
+                                    <th style="padding-left: 40px;">AWBNO</th>
+                                    <th style="padding-left: 40px;">QR Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for packet_detail in packets_details %}
+                                <tr>
+                                    <td style="padding-left: 40px;">{{ packet_detail.AWBNO }}</td>
+                                    <td style="padding-left: 40px;">
+                                        {% if qr_images and qr_images.packet_detail.AWBNO %}
+                                            <img src="{{ qr_images.packet_detail.AWBNO }}" alt="QR Code" style="width: 100px; height: 100px;">
+                                        {% else %}
+                                            QR Code not available
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -173,6 +211,7 @@
                         </table>
                     </div>
                 </div>
+                
                 <div class="order-details">
                     <h2>Live Updates</h2>
                     <div style="overflow-x: auto;">
@@ -250,6 +289,7 @@
                     document.getElementById('awbnoInput').value = awbno;
                     // Submit the form
                     document.getElementById('generateQRForm').submit();
+                    
                 });
             });
     
@@ -275,6 +315,7 @@
                     if (response.ok) {
                         // Success message or update UI accordingly
                         console.log('Order status updated successfully');
+                        alert('Order Updated successfully!');
                     } else {
                         // Error message or handle errors
                         console.error('Failed to update order status');
