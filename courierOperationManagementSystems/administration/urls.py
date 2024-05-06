@@ -10,4 +10,6 @@ urlpatterns = [
     path('ChargeDetails/', views.charge_details_view, name='ChargeDetails'),
     path('ChargeDetails/', views.charge_details_view, name='ChargeDetails'),
     path('logout_view/', views.logout_view, name='logout_view'),
+    path('edit_branch/<int:branch_id>/', views.edit_branch, name='edit_branch'),
+    path('delete_branch/<int:branch_id>/', views.delete_branch, name='delete_branch'),
 ]

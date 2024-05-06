@@ -113,7 +113,7 @@
         <img src="{% static 'speedEx_logo.png' %}" alt="Logo" style="max-height: 50px; margin-right:10px;">
         <!-- Image tag on the leftmost side -->
         <!-- <a class="navbar-brand me-5 btn btn-lg" href="#" style="background-color: #FF7C00">Go To Home</a> -->
-        <a class="navbar-brand me-5 btn btn-lg" href="#" style="background-color: #FF7C00; margin-left: 9px">
+        <a class="navbar-brand me-5 btn btn-lg" href="{% url 'homeapp:home' %}" style="background-color: #FF7C00; margin-left: 9px">
           <i class="bi-house-door-fill"></i> <!-- Home icon -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -126,7 +126,7 @@
               <a class="nav-link" href="#">Contact Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Order Tracking</a>
+              <a class="nav-link" href="{% url 'homeapp:home' %}">Order Tracking</a>
             </li>
             <li class="nav-item dropdown" id="services-dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -162,9 +162,10 @@
       <h4 class="subSearchHeading" style="text-align: center;">Enter your Tracking number and track your Package</h4>
       <!-- searchbox -->
       <div class="search-container">
-        <form class="search-box" action="/search" method="POST">
-          <input type="text" class="form-control" placeholder="Tracking ID" style="height: 40px; font-size:15px">
-          <button  type="submit" class="btn" style="background-color: #FF7C00; margin-top:5px; height:44px; font-size:20px">Track Package</button>
+        <form class="search-box" action="{% url 'homeapp:OrderTracking' %}" method="POST">
+          {% csrf_token %}
+          <input id="awbno-input" type="text" name="awbno" class="form-control" placeholder="Tracking ID" style="height: 40px; font-size:15px">
+          <button id="track-button" type="submit" class="btn" style="background-color: #FF7C00; margin-top:5px; height:44px; font-size:20px">Track Package</button>
         </form>
       </div>
     </div>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Sidebar Dashboard</title>
+    <title>Branch Head DashBoard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -63,17 +63,12 @@
                 <!-- User Info -->
                 <div class="user-info">
                     Welcome, {{ username }}
-                    <!-- You can replace `{{ username }}` with the actual username variable you pass from the Django view -->
                 </div>
-                <!-- Profile Management Link -->
+                
                 <a href="#"><i class="fas fa-user"></i> view branch info</a>
-
-                <!-- Feedback Link -->
-                <a href="#"><i class=""></i>view orders status</a>
+                
                 <a href="#"><i class=""></i>view delivery boys details</a>
                 <a href="{% url 'BranchesInfo:add_delivery_boy' %}"><i class=""></i>add new delivery boy</a>
-
-                <!-- Logout Button -->
                 <a href="{% url 'BranchesInfo:branch_login_form'%}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -105,11 +100,10 @@
                                 <td>{{order.Receiver_Address}}</td>
                                 <td>{{order.Receiver_Contact_No}}</td>
                                 <td>
-                                    <form action="{% url 'BranchesInfo:delete_order' order.AWBNO %}?username={{ username }}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
+                                    <button class="btn btn-danger delete-btn" data-branch-id="{{ branch.Branch_CD }}">Delete</button>
+                                    <a href="{% url 'administration:edit_branch' branch.Branch_CD %}" class="btn btn-primary">Edit</a>
                                 </td>
+                                
                                 <td>
                                     <form action="{% url 'BranchesInfo:packet_assignment_details' %}" method="post">
                                         {% csrf_token %}
@@ -169,7 +163,6 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const toggleDropdowns = document.querySelectorAll('.toggle-dropdown');

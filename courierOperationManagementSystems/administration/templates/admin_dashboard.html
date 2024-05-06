@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     
-    <title>Sidebar Dashboard</title>
-    <!-- Bootstrap CSS -->
+    <title>Admin DashBoard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    
     <style>
         /* Adjust sidebar width and colors */
         .sidebar {
@@ -66,35 +64,77 @@
                 <div class="user-info">
                     Welcome, {{ username }}
                 </div>
-                <a href="#"><i class="fas fa-user"></i> Branches Details</a>
+                
                 <a href="{% url 'administration:add_branch' %}"><i class="fas fa-comment"></i> Create new Branch</a>
-
-                <!-- Logout Button -->
+                
                 <a href="{% url 'administration:logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
-
-            <!-- dashboard details Details -->
+            
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="order-details">
                     <h2>Total number of shipments</h2>
                     <div class="row">
                         <div class="col">
-                            <h4>Courier</h4>
-                            <p>Total packets: {{ courier_count }}</p>
+                            <h4 class="fw-bold" >Courier</h4>
+                            <p class="fs-5">{{ courier_count }}</p>
                         </div>
                         <div class="col">
-                            <h4>Cargo</h4>
-                            <p>Total packets: {{ cargo_count }}</p>
+                            <h4 class="fw-bold">Cargo</h4>
+                            <p class="fs-5">{{ cargo_count }}</p>
                         </div>
                         <div class="col">
-                            <h4>Logistics</h4>
-                            <p>Total packets: {{ logistics_count }}</p>
+                            <h4 class="fw-bold">Logistics</h4>
+                            <p class="fs-5">{{ logistics_count }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="Branches-details">
-                    <h2>Branches Details</h2>
-                    
+                <div class="Branches-details table-responsive">
+                    <h2 class="fw-bold">Branches Details</h2>
+                    <p class="fs-5">Total number of branches: {{ total_branches }}</p>
+                    <table class="table table table table-striped-columns">
+                        <thead>
+                            <tr>
+                                <th>Branch Code</th>
+                                <th>Branch Name</th>
+                                <th>Country ID</th>
+                                <th>State ID</th>
+                                <th>City ID</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Country</th>
+                                <th>Branch Head</th>
+                                <th>Action</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for branch in branches %}
+                                <tr>
+                                    <td>{{ branch.Branch_CD }}</td>
+                                    <td>{{ branch.Branch_NM }}</td>
+                                    <td>{{ branch.countryId }}</td>
+                                    <td>{{ branch.stateId }}</td>
+                                    <td>{{ branch.cityId }}</td>
+                                    <td>{{ branch.Address }}</td>
+                                    <td>{{ branch.city }}</td>
+                                    <td>{{ branch.state }}</td>
+                                    <td>{{ branch.country }}</td>
+                                    <td>{{ branch.Branch_head }}</td>
+                                    <td>
+                                        <form action="{% url 'administration:delete_branch' branch.Branch_CD %}" method="post" style="display: inline;">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="branch_id" value="{{ branch.Branch_CD }}">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <a href="{% url 'administration:edit_branch' branch.Branch_CD %}" class="btn btn-primary">Edit</a>
+                                    </td>
+                                    
+                                </tr>
+                                
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                
                 </div>
                 <div class="Current Plan list">
                     <h2>Current Plan list</h2>
@@ -104,7 +144,7 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const toggleDropdowns = document.querySelectorAll('.toggle-dropdown');

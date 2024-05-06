@@ -5,6 +5,10 @@ from django.views.decorators.cache import cache_control
 from BranchesInfo.models import Data_Records, Branches
 from BranchesInfo.models import ChargeDetails
 from django.contrib.auth import logout
+from django.shortcuts import get_object_or_404
+from .forms import BranchForm
+from django.http import HttpResponseNotAllowed
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_login_form(request):
@@ -65,26 +69,23 @@ def admin_dashboard(request):
             session_id = request.session.get('Admin_Id')
             if session_id is not None:
                 print("Session ID of the branch head from dashboard function:", session_id)
-                return render(request, 'admin_dashboard.html', {'username': username})
+                branches = Branches.objects.all().values()
+                total_branches = branches.count()
+                courier_count = Data_Records.objects.filter(order_type='courier').count()
+                cargo_count = Data_Records.objects.filter(order_type='cargo').count()
+                logistics_count = Data_Records.objects.filter(order_type='logistics').count()
+                context = {
+                    'courier_count': courier_count,
+                    'cargo_count': cargo_count,
+                    'logistics_count': logistics_count,
+                    'username': username,
+                    'total_branches': total_branches,
+                    'branches': branches,
+                }
+                return render(request, 'admin_dashboard.html', context)
         except KeyError:
             print("Session key not found")
     return redirect(reverse('administration:admin_login_form'))
-
-
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def dashboard(request):
-    
-    # Count the number of packets for each type
-    courier_count = Data_Records.objects.filter(Type='Courier').count()
-    cargo_count = Data_Records.objects.filter(Type='Cargo').count()
-    logistics_count = Data_Records.objects.filter(Type='Logistics').count()
-    context = {
-        'courier_count': courier_count,
-        'cargo_count': cargo_count,
-        'logistics_count': logistics_count,
-        'username': request.user.username,
-    }
-    return render(request, 'administration:admin_dashboard.html', context)
 
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -105,6 +106,27 @@ def add_branch(request):
         messages.success(request,'branch saved')
     return render(request,"add_branch.html")
 
+
+
+def edit_branch(request, branch_id):
+    branch = get_object_or_404(Branches, Branch_CD=branch_id)
+    if request.method == 'POST':
+        form = BranchForm(request.POST, instance=branch)
+        if form.is_valid():
+            form.save()
+            return redirect('administration:admin_dashboard')
+    else:
+        form = BranchForm(instance=branch)
+    return render(request, 'edit_branch.html', {'form': form, 'branch': branch})
+
+
+
+def delete_branch(request, branch_id):
+    branch = get_object_or_404(Branches, Branch_CD=branch_id)
+    if request.method == 'POST':
+        branch.delete()
+        return redirect('administration:admin_dashboard')
+    return render(request, 'confirm_delete.html', {'branch': branch})
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def charge_details_view(request):

@@ -8,7 +8,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0"> -->
     
-    <title>Sidebar Dashboard</title>
+    <title>Delivery Boy DashBoard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -173,7 +173,7 @@
                                         <form id="generateQRForm" action="{% url 'BranchesInfo:generate_and_store_qr' %}"method="post">
                                             {% csrf_token %}
                                             <input type="hidden" name="awbno" id="awbnoInput" value="{{ packet_detail.AWBNO }}">
-                                            <button type="submit">Generate QR</button>
+                                            <button type="submit" class="btn btn-warning">Generate QR</button>
                                         </form>
                                     </td>
                                     
@@ -243,25 +243,25 @@
                     <h2>Update Order Status</h2>
                     <form id="update-form">
                         {% csrf_token %}
-                        <label for="awbno">Select AWBNO:</label>
-                        <select name="awbno" id="awbno">
+                        <label for="awbno" class="fw-bold">Select AWBNO:</label>
+                        <select name="awbno" id="awbno" class="form-select mb-3">
                             {% for packet in packets_allotted %}
                                 <option value="{{ packet.AWBNO }}">{{ packet.AWBNO }}</option>
                             {% endfor %}
                         </select>
                         <div>
-                            <label for="transit_status">Transit Status:</label>
-                            <select name="transit_status" id="transit_status">
+                            <label for="transit_status" class="fw-bold">Transit Status:</label>
+                            <select name="transit_status" id="transit_status" class="form-select mb-3 fw-bold">
                                 <option value="In Transit">In Transit</option>
                                 <option value="Delivered">Delivered</option>
                                 <option value="Not Delivered">Not Delivered</option>
                             </select>
                         </div>
                         <div>
-                            <label for="update_location">Update Location:</label>
-                            <input type="text" name="update_location" id="update_location" required>
+                            <label for="update_location" class="fw-bold">Update Location:</label>
+                            <input type="text" name="update_location" id="update_location" class="form-control mb-3" required>
                         </div>
-                        <button type="submit">Update</button>
+                        <button type="submit" class="btn btn-primary mb-3">Update</button>
                     </form>
                 </div>
             </main>
