@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from packetTrackingSystem.models import Live_Updates
-
+from BranchesInfo.models import ChargeDetails
 # Create your views here.
 def home(request):
-    return render(request, 'homePage.html')
+    charge_details = ChargeDetails.objects.all()
+    return render(request, 'homePage.html', {'charge_details': charge_details})
 
 
 def OrderTracking(request):
@@ -17,3 +18,4 @@ def OrderTracking(request):
     else:
         
         return render(request, 'HomePage.html')
+

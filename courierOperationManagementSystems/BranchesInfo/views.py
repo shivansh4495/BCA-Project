@@ -22,6 +22,7 @@ from django.conf import settings
 import os
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from homeapp.models import Feedback
 
 
 # Create your views here.
@@ -93,8 +94,9 @@ def branch_head_dashboard(request):
                     delivery_boys = delivery_Boy_details.objects.all()
                     assigned_orders = PacketAssignmentDetails.objects.all().order_by('-Assign_DT')
                     branches = Branches.objects.filter(Branch_CD=branch_cd)
-                    
-                    return render(request, 'branch_head_dashboard.html', {'username': username, 'orders': matching_orders, 'delivery_boys': delivery_boys, 'assigned_orders': assigned_orders, 'branches': branches, 'matching_live_updates': matching_live_updates})
+                    branch_name = branch.Branch_NM
+                    feedback_data = Feedback.objects.filter(Branch_name=branch_name)
+                    return render(request, 'branch_head_dashboard.html', {'username': username, 'orders': matching_orders, 'delivery_boys': delivery_boys, 'assigned_orders': assigned_orders, 'branches': branches, 'matching_live_updates': matching_live_updates, 'feedback_data': feedback_data})
                 
                 except Branches.DoesNotExist:
                     print("Branches matching query does not exist for Branch_CD:", branch_cd)
@@ -130,14 +132,7 @@ def delivery_boy_dashboard(request):
                 packets_allotted = PacketAssignmentDetails.objects.filter(Delivery_Boy_Id=session_id)
                 live_track = Live_Updates.objects.filter(Delivery_Boy_Name=username)
                 packets_details = []
-                qr_images = {}
-                for packet in packets_allotted:
-                    try:
-                        qr_detail = Qr_Details.objects.get(awbno=packet.AWBNO)
-                        qr_images[packet.AWBNO] = qr_detail.Qr_image.url
-                    except Qr_Details.DoesNotExist:
-                        qr_images[packet.AWBNO] = None
-                        print(f"No QR code image found for AWBNO: {packet.AWBNO}")
+                
                 
                 for packet in packets_allotted:
                     packet_details = Data_Records.objects.get(AWBNO=packet.AWBNO)
@@ -150,7 +145,7 @@ def delivery_boy_dashboard(request):
                         'update_location': live.update_location,
                         'last_update_time': live.last_update_time,
                     }
-                return render(request, 'delivery_boy_dashboard.html', {'username': username, 'delivery_boy': delivery_boy, 'packets_allotted': packets_allotted, 'packets_details': packets_details, 'live_track': live_track})
+                return render(request, 'delivery_boy_dashboard.html', {'username': username, 'delivery_boy': delivery_boy, 'packets_details': packets_details, 'live_track': live_track})
         except KeyError:
             print("Session key not found")
     # Redirect to the login form if session is not available or invalid

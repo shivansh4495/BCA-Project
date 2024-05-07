@@ -48,34 +48,19 @@
       .search-box {
         width: 590px;
       }
-      .articleMain, .articleMain2, .articleMain3 {
-        margin: 24px 14px;
-        position: relative;
-        overflow: hidden;
-        background-image: url("{% static 'parcel.jpg' %}");
-        background-size: cover;
+      .tablediv {
+        text-align: center;
       }
-      .articleMain::before, .articleMain2::before, .articleMain3::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        /* Adjust opacity for fading effect */
+      .tablediv table {
+        margin: 0 auto; 
+        text-align: left; 
       }
-      .articleMain img, .articleMain2 img, .articleMain3 img, .card-body {
-        position: relative;
-        margin: 11px;
-        font-size:xx-large;
-        text-shadow: 2px 2px #424242;
-        color: rgb(255, 255, 255);
-        z-index: 1;
-        /* Ensure the content is above the background */
+      .tablediv th, .tablediv td {
+        padding: 8px; 
       }
       footer {
-        height: 400px; /* Adjust the height as needed */
+        margin-top: 16px;
+        height: 400px;
       }
       
       .footer-heading {
@@ -98,7 +83,7 @@
         <img src="{% static 'speedEx_logo.png' %}" alt="Logo" style="max-height: 50px; margin-right:10px;">
         <!-- Image tag on the leftmost side -->
         <!-- <a class="navbar-brand me-5 btn btn-lg" href="#" style="background-color: #FF7C00">Go To Home</a> -->
-        <a class="navbar-brand me-5 btn btn-lg" href="{% url 'homeapp:home' %}" style="background-color: #FF7C00; margin-left: 9px">
+        <a class="navbar-brand me-5 btn btn-lg" href="{% url 'homeapp:home' %}" style="background-color: #FF7C00; margin-left: 9px;">
           <i class="bi-house-door-fill"></i> <!-- Home icon -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -111,19 +96,9 @@
               <a class="nav-link" href="{% url 'userManagement:feedback'%}">Contact Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'homeapp:home' %}">Order Tracking</a>
+              <a class="nav-link" href="{% url 'homeapp:OrderTracking' %}">Order Tracking</a>
             </li>
-            <!-- <li class="nav-item dropdown" id="services-dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Services
-              </a>
-              <ul class="dropdown-menu" id="services-menu" style="font-size: 27px;">
-                <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Courier Services</a></li>
-                <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Cargo Services</a></li>
-                <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Logistics Services</a></li>
-              </ul>
-            </li> -->
+            
             <li class="nav-item dropdown" id="login-dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLogin" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -149,55 +124,74 @@
       <div class="search-container">
         <form class="search-box" action="{% url 'homeapp:OrderTracking' %}" method="POST">
           {% csrf_token %}
-          <input id="awbno-input" type="text" name="awbno" class="form-control" placeholder="Tracking ID" style="height: 40px; font-size:15px">
-          <button id="track-button" type="submit" class="btn" style="background-color: #FF7C00; margin-top:5px; height:44px; font-size:20px">Track Package</button>
+          <input id="awbno-input" type="text" name="awbno" class="form-control" placeholder="Tracking ID" style="height: 40px; font-size:15px;">
+          <button id="track-button" type="submit" class="btn" style="background-color: #FF7C00; margin-top:5px; height:44px; font-size:20px;">Track Package</button>
         </form>
       </div>
     </div>
     <div class="backgroundimage"></div>
       </div>
-    <div class="articleMain">
-      <img src="{% static 'Forklift.png' %}" class="card-img-top" alt="forklift" style="margin-top: 39px; height: 200px; width: 200px;">
-      <img src="{% static 'van.png' %}" class="card-img-top2" alt="van">
-      <div class="card-body">
-        <h5 class="card-title">Courier Services</h5>
-        <p class="card-text">
-          SpeedEx courier service can provide the solutions to sending your documents, retails, parcels and valuables
-          worldwide. Our courier services can be customized to suit your delivery requirements, with option for door to
-          door pick up and delivery as well as tracking, and signature on delivery.
-          We can give advice you on the best courier method for your item and provide packaging supplies at our service
-          centers to make sure your item is protected during transportation. In addition to this our delivery experts
-          will handle your products safely and deliver them on time.
-        </p>
-        <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
+
+      <div class="container text-center" style="margin-top: 13px;">
+        <div class="row align-items-start">
+          <div class="col">
+            <img src="{% static 'courierimage.png' %}" alt="" style="height: 200px; width: 300px;">
+            <h2>Courier Services</h2>
+            <p style="font-size:25px;">
+              SpeedEx courier service can provide the solutions to sending your documents, retails, parcels and valuables
+              worldwide. Our courier services can be customized to suit your delivery requirements, with option for door to
+              door pick up and delivery as well as tracking, and signature on delivery.
+              We can give advice you on the best courier method for your item and provide packaging supplies at our service
+              centers to make sure your item is protected during transportation. In addition to this our delivery experts
+              will handle your products safely and deliver them on time.
+            </p>
+          </div>
+          
+          <div class="col">
+            <img src="{% static 'cargoimage.jpeg' %}" alt="" style="height: 200px; width: 300px;">
+            <h2>Cargo Services</h2>
+            <p style="font-size:25px;">
+            SpeedEx cargo service is the fastest way to transport large parcel items to your destination with affordable & secured service. Our excess of experience and capability of international freight networks enables them efficiently deliver your parcel, on time. We provide transparent tracking report to the customers with our tracking system.
+            Each shipment has unique tracking number based on this, customer can track their cargo from the moment leaves from location and until it get signed and reached the destination.
+            </p>
+          </div>
+          
+          <div class="col">
+            <img src="{% static 'logisticsimage.png' %}" alt="" style="height: 200px; width: 300px;">
+            <h2>Logistics Services</h2>
+            <p style="font-size:25px;">
+              SpeedEx provides a wide range of logistics solutions via ships, aircraft, train and trucks which can be customized to support your business. We can drive growth with our professional logistics solutions for a small business, individual, corporation or government department, etc.
+              Make simplify your business, improve your profit with our innovative logistics solutions. Our delivery professionals can support reduce the time you spend to handling larger projects to storing, packing and delivering to your destination on time.
+            </p>
+            <a href="{% url 'userManagement:feedback'%}" class="btn btn-primary" style="margin-top: 11px; background-color: #FF7C00;">For Logistics Contact Us</a>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="articleMain2">
-      <img src="{% static 'Forklift.png' %}" class="card-img-top" alt="forklift"
-        style="margin-top: 39px; height: 200px; width: 200px;">
-      <img src="{% static 'van.png' %}" class="card-img-top2" alt="van">
-      <div class="card-body">
-        <h5 class="card-title">Cargo Services</h5>
-        <p class="card-text">
-          SpeedEx cargo service is the fastest way to transport large parcel items to your destination with affordable & secured service. Our excess of experience and capability of international freight networks enables them efficiently deliver your parcel, on time. We provide transparent tracking report to the customers with our tracking system.
-          Each shipment has unique tracking number based on this, customer can track their cargo from the moment leaves from location and until it get signed and reached the destination.
-        </p>
-        <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
+      <div class="pricelist">
+        <h3 style="text-align: center; color: #df6b05;">Charge Details</h3>
+        <div class="tablediv table table-bordered" >
+          <table>
+              <thead>
+                  <tr>
+                      <th>Charge Name</th>
+                      <th>Weight</th>
+                      <th>Amount</th>
+                      
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for detail in charge_details %}
+                  <tr>
+                      <td>{{ detail.Description }}</td>
+                      <td>{{ detail.Weight }}</td>
+                      <td>{{ detail.Amount }}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    <div class="articleMain3">
-      <img src="{% static 'Forklift.png' %}" class="card-img-top" alt="forklift"
-        style="margin-top: 39px; height: 200px; width: 200px;">
-      <img src="{% static 'van.png' %}" class="card-img-top2" alt="van">
-      <div class="card-body">
-        <h5 class="card-title">Logistics Services</h5>
-        <p class="card-text">
-          SpeedEx provides a wide range of logistics solutions via ships, aircraft, train and trucks which can be customized to support your business. We can drive growth with our professional logistics solutions for a small business, individual, corporation or government department, etc.
-          Make simplify your business, improve your profit with our innovative logistics solutions. Our delivery professionals can support reduce the time you spend to handling larger projects to storing, packing and delivering to your destination on time.
-        </p>
-        <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
-      </div>
-    </div>
+
     <footer class="bg-white">
       <div class="container">
         <div class="row">
@@ -215,7 +209,7 @@
           <div class="col-md-3">
             <i class="bi bi-envelope-at-fill email" style="color: rgb(255, 124, 0);"></i>
             <h5 class="footer-heading">Contact Email</h5>
-            <p>admin@speedexcourierservice.com</p>
+            <p>admin@speedex.com</p>
           </div>
           <div class="col-md-3">
             <i class="bi bi-clock-history clock" style="color: rgb(255, 124, 0);"></i>

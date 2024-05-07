@@ -10,7 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        /* Adjust sidebar width and colors */
+        
         .sidebar {
             background-color: #333;
             color: #fff;
@@ -18,10 +18,10 @@
             position: fixed;
             top: 0;
             left: 0;
-            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-y: auto; 
         }
         .sidebar a {
-            padding: 20px 15px; /* Added more vertical padding */
+            padding: 20px 15px; 
             text-decoration: none;
             color: #fff;
             display: block;
@@ -39,7 +39,7 @@
             padding-left: 30px;
         }
         .logout {
-            padding: 20px 15px; /* Added more vertical padding */
+            padding: 20px 15px; 
             text-decoration: none;
             color: #fff;
             display: block;
@@ -76,7 +76,6 @@
                                 <th>Branch Name</th>
                                 <th>Branch Address</th>
                                 <th>Branch Head</th>
-                                <!-- Add more columns if needed -->
                             </tr>
                         </thead>
                         <tbody>
@@ -85,7 +84,6 @@
                                 <td>{{ branch.Branch_NM }}</td>
                                 <td>{{ branch.Address }}</td>
                                 <td>{{ branch.Branch_head }}</td>
-                                <!-- Add more columns if needed -->
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -138,7 +136,6 @@
                                 <th>AWBNO</th>
                                 <th>Delivery Boy Id</th>
                                 <th>Assigned Date</th>
-                                <!-- Add more columns as needed -->
                             </tr>
                         </thead>
                         <tbody>
@@ -147,7 +144,6 @@
                                 <td>{{ assignment.AWBNO }}</td>
                                 <td>{{ assignment.Delivery_Boy_Id }}</td>
                                 <td>{{ assignment.Assign_DT }}</td>
-                                <!-- Add more fields as needed -->
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -210,9 +206,37 @@
                     </div>
                     
                 </div>
+                <div class="queries">
+                    <h2>Query/Feedback Data</h2>
+                    <table class="table table table-striped-columns">
+                        <thead>
+                            <tr>
+                                <th>Feedback ID</th>
+                                <th>First Name</th>
+                                <th>Contact Number</th>
+                                <th>Contact Email</th>
+                                <th>Contact Date</th>
+                                <th>Contact Query/Problem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for feedback in feedback_data %}
+                            <tr>
+                                <td>{{ feedback.Feedback_Id }}</td>
+                                <td>{{ feedback.Fname }}</td>
+                                <td>{{ feedback.ContactNo }}</td>
+                                <td>{{ feedback.Email }}</td>
+                                <td>{{ feedback.Date }}</td>
+                                <td>{{ feedback.FeedbackMsg }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </main>
         </div>
     </div>
+    <div style="margin-bottom: 12px;"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

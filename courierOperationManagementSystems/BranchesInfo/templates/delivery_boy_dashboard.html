@@ -184,34 +184,6 @@
                         </table>
                     </div>
                 </div>
-                <div class="order-details">
-                    <h2>QR Code Display</h2>
-                    <div style="overflow-x: auto;">
-                        <table class="table table-striped-columns">
-                            <thead>
-                                <tr>
-                                    <th style="padding-left: 40px;">AWBNO</th>
-                                    <th style="padding-left: 40px;">QR Code</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for packet_detail in packets_details %}
-                                <tr>
-                                    <td style="padding-left: 40px;">{{ packet_detail.AWBNO }}</td>
-                                    <td style="padding-left: 40px;">
-                                        {% if qr_images and qr_images.packet_detail.AWBNO %}
-                                            <img src="{{ qr_images.packet_detail.AWBNO }}" alt="QR Code" style="width: 100px; height: 100px;">
-                                            Qr is generated
-                                        {% else %}
-                                            No QR Code is generated
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
                 
                 <div class="order-details">
                     <h2>Live Updates</h2>
