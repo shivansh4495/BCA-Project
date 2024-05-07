@@ -17,3 +17,4 @@ class Login_Info(models.Model):
     User_Type = models.CharField(max_length=7, null=False)
     def __str__(self):
         return self.User_Id
+

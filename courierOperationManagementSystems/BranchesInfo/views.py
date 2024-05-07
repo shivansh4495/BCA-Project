@@ -137,6 +137,7 @@ def delivery_boy_dashboard(request):
                         qr_images[packet.AWBNO] = qr_detail.Qr_image.url
                     except Qr_Details.DoesNotExist:
                         qr_images[packet.AWBNO] = None
+                        print(f"No QR code image found for AWBNO: {packet.AWBNO}")
                 
                 for packet in packets_allotted:
                     packet_details = Data_Records.objects.get(AWBNO=packet.AWBNO)

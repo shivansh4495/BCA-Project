@@ -64,23 +64,21 @@
                     Welcome, {{ username }}
                     <!-- You can replace `{{ username }}` with the actual username variable you pass from the Django view -->
                 </div>
-
+                <a href="{% url 'userManagement:client_order'%}"><i class="fas fa-shopping-cart"></i>Create New Orders</a>
                 <!-- Orders Link with Dropdown -->
-                <a href="#" class="toggle-dropdown"><i class="fas fa-shopping-cart"></i> Create new Orders <i class="fas fa-chevron-down float-end"></i></a>
+                <!-- <a href="#" class="toggle-dropdown"><i class="fas fa-shopping-cart"></i> Create new Orders <i class="fas fa-chevron-down float-end"></i></a>
                 <div class="dropdown">
                     <a href="{% url 'userManagement:client_order'%}" class="dropdown-item">New Orders</a>
-                    <!-- <a href="#" class="dropdown-item">In Progress Orders</a> -->
-                    <!-- <a href="#" class="dropdown-item">Delivered Orders</a> -->
-                </div>
+                </div> -->
 
                 <!-- Profile Management Link -->
-                <a href="#"><i class="fas fa-user"></i> Profile Management</a>
+                <a href="{% url 'userManagement:profile_management' %}"><i class="fas fa-user"></i> Profile Management</a>
 
                 <!-- Feedback Link -->
                 <a href="#"><i class="fas fa-comment"></i> Feedback</a>
 
                 <!-- Logout Button -->
-                <a href="{% url 'userManagement:user_login_form' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="{% url 'userManagement:logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
 
             <!-- Current Order Details -->
