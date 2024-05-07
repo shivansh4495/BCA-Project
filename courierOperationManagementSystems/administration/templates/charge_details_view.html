@@ -32,7 +32,7 @@
                         Add Charge Details
                     </div>
                     <div class="card-body">
-                        <form action="{% url 'administration:ChargeDetails' %}" method="post">
+                        <form action="{% url 'administration:charge_details_view' %}" method="post">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="distance" class="form-label">Plan Description:</label>

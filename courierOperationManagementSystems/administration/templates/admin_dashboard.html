@@ -137,14 +137,14 @@
                     <br>
                     <div class="Create Branch Head Credentials">
                         <h2>Create Branch Head Credentials</h2>
-                        <a href="{% url 'administration:add_branch_head' %}">Add Branch Head</a>
+                        <a href="{% url 'administration:add_branch_head' %}" class="btn btn-primary">Add Branch Head</a>
                     </div>
                     <br>
                 </div>
                 <div class="Current Plan list">
                     <div class="Current Plan list">
                         <h2>Current Plan list</h2>
-                        <!-- <a href="{% url 'administration:ChargeDetails' %}">Add or Edit Plan</a> -->
+                        <a href="{%url 'administration:charge_details_view' %}" class="btn btn-primary"> Add New Plan</a>
                     </div>
                     
                     <!-- Display charge details in a table -->
@@ -173,6 +173,7 @@
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                     </td>
+                                    
                                 </tr>
                                 {% endfor %}
                             </tbody>

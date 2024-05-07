@@ -11,14 +11,14 @@
 <body>
     <div class="container">
         <h2 class="mt-4">Packet Assignment Details</h2>
-        <form action="" method="post" class="mt-4">
+        <form action="{% url 'BranchesInfo:packet_assignment_details'%}" method="post" class="mt-4">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="awbno" class="form-label">Select AWBNO:</label>
+                <label for="awbno" class="form-label">Select AWBNO from drop down you want to assign:</label>
                 {{ form.awbno }}
             </div>
             <div class="mb-3">
-                <label for="delivery_boy" class="form-label">Select Delivery Boy:</label>
+                <label for="delivery_boy" class="form-label">Select Delivery Boy from drop down you want to assign:</label>
                 {{ form.delivery_boy }}
             </div>
             <button type="submit" class="btn btn-primary">Assign Packet</button>

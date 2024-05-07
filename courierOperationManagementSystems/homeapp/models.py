@@ -6,7 +6,11 @@ class Feedback(models.Model):
     Fname = models.CharField(max_length=50, null=False)
     Lname = models.CharField(max_length=50, null=False)
     ContactNo = models.CharField(max_length=50, null=True)
+    Branch_Id = models.CharField(max_length=20, null=True)
+    Branch_name = models.CharField(max_length=50, null=True)
     FeedbackMsg = models.TextField(null=False)
     Date = models.DateTimeField(null= True)
     Email = models.CharField(max_length=100, null=True)
     Reply_flag = models.CharField(max_length=1, null=False)
+    def __str__(self):
+        return self.Fname

@@ -40,12 +40,12 @@
         <div class="collapse navbar-collapse nav justify-content-center" id="navbarNavDropdown" style="font-size: 27px;">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact Us</a>
+              <a class="nav-link" href="{% url 'userManagement:feedback'%}">Contact Us</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'homeapp:home' %}">Order Tracking</a>
             </li>
-            <li class="nav-item dropdown" id="services-dropdown">
+            <!-- <li class="nav-item dropdown" id="services-dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Services
@@ -55,7 +55,7 @@
                 <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Cargo Services</a></li>
                 <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Logistics Services</a></li>
               </ul>
-            </li>
+            </li> -->
             <li class="nav-item dropdown" id="login-dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLogin" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">

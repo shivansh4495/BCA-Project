@@ -14,6 +14,9 @@ import googlemaps
 import json
 from django.http import JsonResponse
 from django.contrib.auth import logout
+from homeapp.models import Feedback
+from .forms import FeedbackForm
+
 
 
 def user_login_form(request):
@@ -49,11 +52,11 @@ def user_dashboard(request):
             user_orders = Data_Records.objects.filter(Client_Id=session_id)
             
             
-            live_updates = Live_Updates.objects.filter(AWBNO__in=[order.AWBNO for order in user_orders])
+            live_updates = Live_Updates.objects.filter(AWBNO__in=[order.AWBNO for order in user_orders]).order_by('-last_update_time')
             return render(request, 'user_dashboard.html', {'user_orders': user_orders, 'username': username, 'live_updates': live_updates})
     except KeyError:
         print("Session key not found")
-    # Redirect to the login form if session is not available or invalid
+    
     return redirect('user_login_form')
 
 
@@ -125,7 +128,7 @@ def client_order(request):
                 pass
             
             elif payment_method == 'cash':
-                # Save the order with the client ID
+                
                 final_order = Data_Records(Sender_Name=sender_name, Sender_Address=sender_address, Sender_Contact_No=sender_contact, Book_date=order_date_aware, Sender_City=sender_city, Receiver_Name=receiver_name, Receiver_Address=receiver_address, Receiver_Contact_No=receiver_contact, Receiver_City=receiver_city, order_type=order_type, sender_state=sender_state, receiver_state=receiver_state, Client_Id=client, Weight=weight, Distance=distance, Price=total_price, Payment_Method=payment_method)
                 final_order.save()
                 return HttpResponseRedirect(reverse('userManagement:user_dashboard') + f'?username={client.Client_Name}')
@@ -204,33 +207,34 @@ def profile_management(request):
             form = ProfileForm(instance=client)
         return render(request, 'profile_management.html', {'form': form})
     except KeyError:
-        # Handle the case when 'Client_Name' key is not found in the session
         messages.error(request, 'Session data not found. Please log in again.')
         return redirect('userManagement:user_login_form')
 
 
 def logout_view(request):
     try:
-        # Retrieve session data
         session_id = request.session.get('Client_Id')
         session_name = request.session.get('Client_Name')
-
-        # Check if session data exists
         if session_id and session_name:
-            # Clear session data
             del request.session['Client_Id']
             del request.session['Client_Name']
             request.session.flush()
-
             print("Session data cleared successfully for logout_view:", session_name)
-
-        # Log the user out
         logout(request)
-
-        # Redirect to the login form
         return redirect('userManagement:user_login_form')
-
     except Exception as e:
         print("Error occurred during logout:", e)
-        # Redirect to the login form even if an error occurs
         return redirect('userManagement:user_login_form')
+
+
+def feedback(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirect to the userDashboard after successful form submission
+            return redirect('userManagement:user_dashboard')  
+    else:
+        form = FeedbackForm()
+    return render(request, 'feedback.html', {'form': form})
+

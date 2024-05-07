@@ -7,6 +7,7 @@
   <title>Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
       .nav-link:hover {
@@ -73,35 +74,19 @@
         z-index: 1;
         /* Ensure the content is above the background */
       }
-      .footerClass {
-        margin: 13px;
-        font-size:xx-large;
-        position: relative;
-        overflow: hidden;
-        background-image:url("{% static 'aboutus.jpg' %}");
-        background-repeat: no-repeat;
-        background-size: cover;
+      footer {
+        height: 400px; /* Adjust the height as needed */
       }
-      .footerClass::after{
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
+      
+      .footer-heading {
+        color: rgb(255, 124, 0);
       }
-      footer h1 {
-        position: relative;
-        text-align: center;
-        background-color:lightblue;
-        z-index: 1;
+      footer p {
+        font-weight: bold;
       }
-      .footerClass p {
-        position: relative;
-        z-index: 1;
-        color: white;
-        text-shadow: 2px 2px #424242;
+      .house-icon, .telephone, .email, .clock {
+        font-size: 66px;
+        margin-bottom: 10px;
       }
     </style>
 </head>
@@ -123,12 +108,12 @@
         <div class="collapse navbar-collapse nav justify-content-center" id="navbarNavDropdown" style="font-size: 27px;">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact Us</a>
+              <a class="nav-link" href="{% url 'userManagement:feedback'%}">Contact Us</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'homeapp:home' %}">Order Tracking</a>
             </li>
-            <li class="nav-item dropdown" id="services-dropdown">
+            <!-- <li class="nav-item dropdown" id="services-dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Services
@@ -138,7 +123,7 @@
                 <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Cargo Services</a></li>
                 <li><a class="dropdown-item" href="{% url 'userManagement:client_order' %}">Logistics Services</a></li>
               </ul>
-            </li>
+            </li> -->
             <li class="nav-item dropdown" id="login-dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLogin" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -213,14 +198,34 @@
         <a href="#" class="btn btn-primary" style="margin-bottom: 11px;">Place Your Order</a>
       </div>
     </div>
-  <footer class="footerClass">
-    <h1>ABOUT US </h1>
-    <p>
-      SpeedEx Courier Service is a leading courier and cargo delivery services in International. We bring together the world’s top parcel and cargo carriers into a single access point under our trademark to allowing our customers to save time and money on all their logistics needs.
-      We provide our customers to multiple cargo, courier and logistics services, without limitations on the size, value and weight of parcels we deliver. We have the resources and expertise to deliver and to pick up from virtually any destination on the world.
-      SpeedEx is most efficient and reliable courier service providers who follow professional practices to deliver the best service. With over two decade of existence, experienced team and strong service network, we have been able to efficiently serve our clientele to their needs in International courier Services at most competitive prices.
-    </p>
-  </footer>
+    <footer class="bg-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <i class="bi bi-house-up-fill house-icon" style="color: rgb(255, 124, 0);"></i>
+            <h5 class="footer-heading">Address</h5>
+            <p>111C/6, ETTAYAPURAM ROAD, TUTICORIN - 628002</p>
+            <p>TAMILNADU. INDIA</p>
+          </div>
+          <div class="col-md-3">
+            <i class="bi bi-telephone-outbound-fill telephone" style="color: rgb(255, 124, 0);"></i>
+            <h5 class="footer-heading">Contact Number</h5>
+            <p>(123) 456-7890</p>
+          </div>
+          <div class="col-md-3">
+            <i class="bi bi-envelope-at-fill email" style="color: rgb(255, 124, 0);"></i>
+            <h5 class="footer-heading">Contact Email</h5>
+            <p>admin@speedexcourierservice.com</p>
+          </div>
+          <div class="col-md-3">
+            <i class="bi bi-clock-history clock" style="color: rgb(255, 124, 0);"></i>
+            <h5 class="footer-heading">Working Hours</h5>
+            <p>Mon-Fri: 9am - 9pm</p>
+            <p>Sat-Sun: Closed</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   <script 
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
   </script>

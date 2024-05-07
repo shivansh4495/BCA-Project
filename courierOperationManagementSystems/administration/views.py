@@ -151,10 +151,11 @@ def charge_details_view(request):
             )
             messages.success(request, "Charge details added successfully!")
             print("New ChargeDetails object created successfully:", new_charge_details)
+            return redirect(reverse('administration:admin_dashboard'))
         except Exception as e:
             print("Error creating ChargeDetails object:", e)
-        return redirect(reverse('administration:ChargeDetails'))
-    return render(request, 'ChargeDetails.html')
+        return redirect(reverse('administration:admin_dashboard'))
+    return render(request, 'charge_details_view.html')
 
 # Edit charge detail
 def edit_charge_detail(request, charge_id):

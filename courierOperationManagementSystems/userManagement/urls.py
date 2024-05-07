@@ -11,4 +11,5 @@ urlpatterns = [
     path('calculate-distance/', views.calculate_distance_view, name='calculate_distance'),
     path('profile/', views.profile_management, name='profile_management'),
     path('logout_view/', views.logout_view, name='logout_view'),
+    path('feedback/', views.feedback, name='feedback'),
 ]
