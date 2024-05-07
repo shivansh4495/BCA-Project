@@ -12,4 +12,7 @@ urlpatterns = [
     path('logout_view/', views.logout_view, name='logout_view'),
     path('edit_branch/<int:branch_id>/', views.edit_branch, name='edit_branch'),
     path('delete_branch/<int:branch_id>/', views.delete_branch, name='delete_branch'),
+    path('edit_charge_detail/<int:charge_id>/', views.edit_charge_detail, name='edit_charge_detail'),
+    path('delete_charge_detail/<int:charge_id>/', views.delete_charge_detail, name='delete_charge_detail'),
+    path('add_branch_head/', views.add_branch_head, name='add_branch_head'),
 ]

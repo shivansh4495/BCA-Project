@@ -64,19 +64,38 @@
                 <div class="user-info">
                     Welcome, {{ username }}
                 </div>
-                
-                <a href="#"><i class="fas fa-user"></i> view branch info</a>
-                
-                <a href="#"><i class=""></i>view delivery boys details</a>
                 <a href="{% url 'BranchesInfo:add_delivery_boy' %}"><i class=""></i>add new delivery boy</a>
                 <a href="{% url 'BranchesInfo:branch_login_form'%}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="branchInfo">
+                    <h2> Your Branch Details</h2>
+                    <table class="table table table-striped-columns">
+                        <thead>
+                            <tr>
+                                <th>Branch Name</th>
+                                <th>Branch Address</th>
+                                <th>Branch Head</th>
+                                <!-- Add more columns if needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for branch in branches %}
+                            <tr>
+                                <td>{{ branch.Branch_NM }}</td>
+                                <td>{{ branch.Address }}</td>
+                                <td>{{ branch.Branch_head }}</td>
+                                <!-- Add more columns if needed -->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 <div class="order-details">
                     <h2>Total number of orders in your Branch: {{orders.count}}</h2>
                 </div>
                 <div class="order-details">
-                    <h2>Unassigned Orders</h2>
+                    <h2>All Orders From Your Branch</h2>
                     <table class="table table table-striped-columns">
                         <thead>
                             <tr>
@@ -100,11 +119,6 @@
                                 <td>{{order.Receiver_Address}}</td>
                                 <td>{{order.Receiver_Contact_No}}</td>
                                 <td>
-                                    <button class="btn btn-danger delete-btn" data-branch-id="{{ branch.Branch_CD }}">Delete</button>
-                                    <a href="{% url 'administration:edit_branch' branch.Branch_CD %}" class="btn btn-primary">Edit</a>
-                                </td>
-                                
-                                <td>
                                     <form action="{% url 'BranchesInfo:packet_assignment_details' %}" method="post">
                                         {% csrf_token %}
                                         {{ form.as_p }}
@@ -118,20 +132,57 @@
                 </div>
                 <div class="order-details">
                     <h2>Assigned Orders</h2>
-                    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>AWBNO</th>
+                                <th>Delivery Boy Id</th>
+                                <th>Assigned Date</th>
+                                <!-- Add more columns as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for assignment in assigned_orders %}
+                            <tr>
+                                <td>{{ assignment.AWBNO }}</td>
+                                <td>{{ assignment.Delivery_Boy_Id }}</td>
+                                <td>{{ assignment.Assign_DT }}</td>
+                                <!-- Add more fields as needed -->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
                 <div class="order-details">
-                    <h2>Un-Delivered/ In-Transit Orders</h2>
-                    
+                    <h2>Orders status</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>AWBNO</th>
+                                <th>Status</th>
+                                <th>Location</th>
+                                <th>Last Updated</th>
+                                <th>Assigned Delivery Boy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for live_update in matching_live_updates %}
+                            <tr>
+                                <td>{{ live_update.AWBNO }}</td>
+                                <td>{{ live_update.transit_status }}</td>
+                                <td>{{ live_update.update_location }}</td>
+                                <td>{{ live_update.last_update_time }}</td>
+                                <td>{{ live_update.Delivery_Boy_Name }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">No live updates available.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                <div class="order-details">
-                    <h2>Successfully Delivered Orders</h2>
-                    
-                </div>
-                <div class="order-details">
-                    <h2>delivery boy details based on number of packet he has</details></h2>
-                    
-                </div>
+                
                 <div class="order-details">
                     <h2>all delivery boy details</h2>
                     <div class="order-details">

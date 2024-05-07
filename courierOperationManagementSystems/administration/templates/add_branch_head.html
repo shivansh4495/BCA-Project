@@ -1,0 +1,10 @@
+<!-- add_branch_head.html -->
+
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Add Branch Head</legend>
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </fieldset>
+</form>

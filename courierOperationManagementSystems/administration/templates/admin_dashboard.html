@@ -134,11 +134,51 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                
+                    <br>
+                    <div class="Create Branch Head Credentials">
+                        <h2>Create Branch Head Credentials</h2>
+                        <a href="{% url 'administration:add_branch_head' %}">Add Branch Head</a>
+                    </div>
+                    <br>
                 </div>
                 <div class="Current Plan list">
-                    <h2>Current Plan list</h2>
-                    <a href="{% url 'administration:ChargeDetails' %}">Add or Edit Plan</a>
+                    <div class="Current Plan list">
+                        <h2>Current Plan list</h2>
+                        <!-- <a href="{% url 'administration:ChargeDetails' %}">Add or Edit Plan</a> -->
+                    </div>
+                    
+                    <!-- Display charge details in a table -->
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Charge ID</th>
+                                    <th>Plan Description</th>
+                                    <th>Weight</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for charge_detail in charge_details %}
+                                <tr>
+                                    <td>{{ charge_detail.PlanCode }}</td>
+                                    <td>{{ charge_detail.Description }}</td>
+                                    <td>{{ charge_detail.Weight }}</td>
+                                    <td>{{ charge_detail.Amount }}</td>
+                                    <td>
+                                        <a href="{% url 'administration:edit_charge_detail' charge_detail.pk %}" class="btn btn-primary">Edit</a>
+                                        <form action="{% url 'administration:delete_charge_detail' charge_detail.pk %}" method="post" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
                 </div>
             </main>
         </div>

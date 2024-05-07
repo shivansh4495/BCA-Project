@@ -1,0 +1,13 @@
+
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Delete Charge Detail</legend>
+        <p>Are you sure you want to delete this charge detail?</p>
+        <p><strong>Plan Code:</strong> {{ charge_detail.PlanCode }}</p>
+        <p><strong>Description:</strong> {{ charge_detail.Description }}</p>
+        <p><strong>Weight:</strong> {{ charge_detail.Weight }}</p>
+        <p><strong>Amount:</strong> {{ charge_detail.Amount }}</p>
+        <button type="submit">Confirm Delete</button>
+    </fieldset>
+</form>

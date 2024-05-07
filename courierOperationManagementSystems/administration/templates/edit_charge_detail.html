@@ -1,0 +1,10 @@
+<!-- edit_charge_detail.html -->
+
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Edit Charge Detail</legend>
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </fieldset>
+</form>

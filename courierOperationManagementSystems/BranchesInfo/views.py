@@ -20,6 +20,8 @@ from django.shortcuts import redirect
 from .models import Qr_Details, Data_Records
 from django.conf import settings
 import os
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -79,23 +81,28 @@ def branch_head_dashboard(request):
                 branch_head = Branch_head.objects.get(Branch_head_Username=username)
                 branch_cd = branch_head.Branch_CD
                 
-                # Fetch the branch from the Branches table using the branch code
-                branch = Branches.objects.get(Branch_CD=branch_cd)
+                try:
+                    branch = Branches.objects.get(Branch_CD=branch_cd)
+                    branch_city = branch.city
+                    
+                    matching_orders = Data_Records.objects.filter(Sender_City=branch_city)
+                    
+                    awbno_list = [order.AWBNO for order in matching_orders]
+                    matching_live_updates = Live_Updates.objects.filter(AWBNO__in=awbno_list)
+                    
+                    delivery_boys = delivery_Boy_details.objects.all()
+                    assigned_orders = PacketAssignmentDetails.objects.all().order_by('-Assign_DT')
+                    branches = Branches.objects.filter(Branch_CD=branch_cd)
+                    
+                    return render(request, 'branch_head_dashboard.html', {'username': username, 'orders': matching_orders, 'delivery_boys': delivery_boys, 'assigned_orders': assigned_orders, 'branches': branches, 'matching_live_updates': matching_live_updates})
                 
-                # Get the city of the branch
-                branch_city = branch.city
-                
-                # Retrieve orders from Data_Records where sender city matches the branch city
-                matching_orders = Data_Records.objects.filter(Sender_City=branch_city)
-                
-                # delivery_boys = delivery_Boy_details.objects.filter(Branch_CD=branch_cd)
-                delivery_boys = delivery_Boy_details.objects.all()
-                
-                return render(request, 'branch_head_dashboard.html', {'username': username, 'orders': matching_orders, 'delivery_boys':delivery_boys})
+                except Branches.DoesNotExist:
+                    print("Branches matching query does not exist for Branch_CD:", branch_cd)
+                    return HttpResponse("Your Branch is deleted by The Admin Contact to the Admin to recreate your Branch to reassign you new Branch.") 
         except KeyError:
             print("Session key not found")
-    # Redirect to the login form if session is not available or invalid
-    return redirect(reverse('BranchesInfo:branch_login_form'))
+    return redirect(reverse('BranchesInfo:branch_login_form')) 
+
 
 def delete_order(request, awbno):
     if request.method == 'POST':

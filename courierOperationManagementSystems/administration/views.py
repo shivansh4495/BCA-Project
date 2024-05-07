@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from .models import Admin_table
 from django.views.decorators.cache import cache_control 
-from BranchesInfo.models import Data_Records, Branches
+from BranchesInfo.models import Data_Records, Branches, Branch_head
 from BranchesInfo.models import ChargeDetails
 from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404
-from .forms import BranchForm
+from .forms import BranchForm, ChargeDetailsForm, BranchHeadForm
 from django.http import HttpResponseNotAllowed
 
 
@@ -74,6 +74,7 @@ def admin_dashboard(request):
                 courier_count = Data_Records.objects.filter(order_type='courier').count()
                 cargo_count = Data_Records.objects.filter(order_type='cargo').count()
                 logistics_count = Data_Records.objects.filter(order_type='logistics').count()
+                charge_details = ChargeDetails.objects.all()
                 context = {
                     'courier_count': courier_count,
                     'cargo_count': cargo_count,
@@ -81,6 +82,7 @@ def admin_dashboard(request):
                     'username': username,
                     'total_branches': total_branches,
                     'branches': branches,
+                    'charge_details': charge_details,
                 }
                 return render(request, 'admin_dashboard.html', context)
         except KeyError:
@@ -153,3 +155,33 @@ def charge_details_view(request):
             print("Error creating ChargeDetails object:", e)
         return redirect(reverse('administration:ChargeDetails'))
     return render(request, 'ChargeDetails.html')
+
+# Edit charge detail
+def edit_charge_detail(request, charge_id):
+    charge_detail = get_object_or_404(ChargeDetails, pk=charge_id)
+    if request.method == 'POST':
+        form = ChargeDetailsForm(request.POST, instance=charge_detail)
+        if form.is_valid():
+            form.save()
+            return redirect('administration:admin_dashboard')
+    else:
+        form = ChargeDetailsForm(instance=charge_detail)
+    return render(request, 'edit_charge_detail.html', {'form': form, 'charge_detail': charge_detail})
+
+# Delete charge detail
+def delete_charge_detail(request, charge_id):
+    charge_detail = get_object_or_404(ChargeDetails, pk=charge_id)
+    if request.method == 'POST':
+        charge_detail.delete()
+        return redirect('administration:admin_dashboard')
+    return render(request, 'confirm_delete_charge_detail.html', {'charge_detail': charge_detail})
+
+def add_branch_head(request):
+    if request.method == 'POST':
+        form = BranchHeadForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('administration:admin_dashboard')  
+    else:
+        form = BranchHeadForm()
+    return render(request, 'add_branch_head.html', {'form': form})
