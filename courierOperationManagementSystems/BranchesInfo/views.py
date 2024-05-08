@@ -132,8 +132,13 @@ def delivery_boy_dashboard(request):
                 packets_allotted = PacketAssignmentDetails.objects.filter(Delivery_Boy_Id=session_id)
                 live_track = Live_Updates.objects.filter(Delivery_Boy_Name=username)
                 packets_details = []
-                
-                
+                qr_images = {}
+                for packet in packets_allotted:
+                    try:
+                        qr_detail = Qr_Details.objects.get(awbno=packet.AWBNO)
+                        qr_images[packet.AWBNO] = qr_detail.Qr_image.url
+                    except Qr_Details.DoesNotExist:
+                        qr_images[packet.AWBNO] = None
                 for packet in packets_allotted:
                     packet_details = Data_Records.objects.get(AWBNO=packet.AWBNO)
                     packets_details.append(packet_details)
@@ -145,7 +150,7 @@ def delivery_boy_dashboard(request):
                         'update_location': live.update_location,
                         'last_update_time': live.last_update_time,
                     }
-                return render(request, 'delivery_boy_dashboard.html', {'username': username, 'delivery_boy': delivery_boy, 'packets_details': packets_details, 'live_track': live_track})
+                return render(request, 'delivery_boy_dashboard.html', {'username': username, 'delivery_boy': delivery_boy, 'packets_details': packets_details, 'live_track': live_track, 'packets_allotted': packets_allotted,})
         except KeyError:
             print("Session key not found")
     # Redirect to the login form if session is not available or invalid
