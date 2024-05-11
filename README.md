@@ -39,7 +39,7 @@ In this module all the critical operations takes place this module contains two 
 * Packets updates is also monitored here realated to his branch.
 * Query/Feedback given by clients to his specific branch is also shown in branch head dashboard.
 
-Delivery Boy
+###### Delivery Boy
 
 * In delivery boy dashboard all packets/orders allocated to him by branch head is shown here, with required info such as - AWBNO, order date, sender name, sender address, sender contact number, receiver name, receiver contact number, receiver address.
 * For tracking faclity there is option to generate QR Code which contains details like AWBNO, sender name, sender address, receiver name, receiver address, mode of payment at the time order is placed by the client.
