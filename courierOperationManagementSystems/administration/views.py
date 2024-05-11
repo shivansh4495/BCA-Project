@@ -36,7 +36,7 @@ def admin_login_form(request):
 
 def logout_view(request):
     try:
-        # Check if the keys exist in the session before deletion
+        
         print("Session keys before deletion:", request.session.keys())
 
         if 'Admin_Id' in request.session:
@@ -49,12 +49,12 @@ def logout_view(request):
         else:
             print("username not found in session")
 
-        # Delete the session keys
+        
         del request.session['Admin_Id']
         del request.session['username']
         print("Session keys deleted")
 
-        # Redirect after logout
+        
         return redirect('administration:admin_login_form')
     except KeyError as e:
         print("Error deleting session keys:", e)
@@ -157,7 +157,7 @@ def charge_details_view(request):
         return redirect(reverse('administration:admin_dashboard'))
     return render(request, 'charge_details_view.html')
 
-# Edit charge detail
+
 def edit_charge_detail(request, charge_id):
     charge_detail = get_object_or_404(ChargeDetails, pk=charge_id)
     if request.method == 'POST':
@@ -169,7 +169,7 @@ def edit_charge_detail(request, charge_id):
         form = ChargeDetailsForm(instance=charge_detail)
     return render(request, 'edit_charge_detail.html', {'form': form, 'charge_detail': charge_detail})
 
-# Delete charge detail
+
 def delete_charge_detail(request, charge_id):
     charge_detail = get_object_or_404(ChargeDetails, pk=charge_id)
     if request.method == 'POST':

@@ -32,13 +32,13 @@ def branch_login_form(request):
         password = request.POST.get('password')
         user_type = request.POST.get('User_Type')
         
-        # Check if the user type is selected
+        
         if not user_type:
             messages.error(request, 'Please select a user type.')
             return render(request, "branch_login_form.html")
         
         if user_type == 'delivery_boy':
-            # Check if the user exists in the delivery_Boy_details model
+            
             delivery_boy = delivery_Boy_details.objects.filter(Delivery_Boy_Username=userid, Delivery_Boy_Password=password).first()
             if delivery_boy:
                 request.session['Delivery_Boy_Id'] = delivery_boy.Delivery_Boy_Id
@@ -49,7 +49,7 @@ def branch_login_form(request):
                 messages.error(request, 'Invalid delivery boy credentials.')
         
         elif user_type == 'branch_head':
-            # Check if the user exists in the Branch_head model
+            
             branch_head = Branch_head.objects.filter(Branch_head_Username=userid, Branch_head_Password=password).first()
             if branch_head:
                 request.session['Branch_head_Id'] = branch_head.Branch_head_Id
@@ -59,7 +59,7 @@ def branch_login_form(request):
             else:
                 messages.error(request, 'Invalid branch head credentials.')
         
-        # If user does not exist in either model, display error message
+        
         messages.error(request, 'Invalid User or User Type')
     
     return render(request, "branch_login_form.html")
@@ -120,9 +120,9 @@ def delete_order(request, awbno):
 
 
 def delivery_boy_dashboard(request):
-    # Retrieve the username from the query parameters
+    
     username = request.GET.get('username')
-    # You may need to adjust this if the username is not passed in the query parameters
+    
     if username:
         try:
             session_id = request.session.get('Delivery_Boy_Id')
@@ -213,10 +213,10 @@ def update_packet_status(request):
         update_location = request.POST.get('update_location')
         order_update_time = timezone.now()
 
-        # Get the delivery boy name from the session
+        
         delivery_boy_name = delivery_Boy_details.objects.get(Delivery_Boy_Id=delivery_boy_id).Delivery_Boy_Username
 
-        # Create and save the Order_Updates object
+        
         orderUpdates = Live_Updates.objects.create(
             AWBNO=awbno,
             transit_status=transit_status,
@@ -225,7 +225,6 @@ def update_packet_status(request):
             Delivery_Boy_Name=delivery_boy_name
         )
 
-        # Redirect to the delivery boy dashboard
         return redirect(reverse('BranchesInfo:delivery_boy_dashboard'))
 
     return render(request, 'your_template.html')
@@ -235,12 +234,12 @@ def update_packet_status(request):
 
 def generate_and_store_qr(request):
     if request.method == 'POST':
-        awbno = request.POST.get('awbno')  # Retrieve awbno from the POST data
+        awbno = request.POST.get('awbno')  
         try:
-            # Fetch data from Data_Records based on AWBNO
+            
             data_record = Data_Records.objects.get(AWBNO=awbno)
 
-            # Generate QR code with data from Data_Records
+            
             qr_data = f'Sender Name: {data_record.Sender_Name}\n'
             qr_data += f'Sender Address: {data_record.Sender_Address}\n'
             qr_data += f'Sender City: {data_record.Sender_City}\n'
@@ -260,25 +259,25 @@ def generate_and_store_qr(request):
             qr.add_data(qr_data)
             qr.make(fit=True)
 
-            # Create an in-memory binary stream
+            
             buffer = BytesIO()
 
-            # Save the QR code image to the buffer
+            
             qr_img = qr.make_image(fill_color="black", back_color="white")
             qr_img.save(buffer)
             buffer.seek(0)
             
-            # Check if a QR code with the same AWBNO already exists
+
             existing_qr = Qr_Details.objects.filter(awbno=awbno)
             if existing_qr.exists():
-                # If a QR code with the same AWBNO exists, delete it
+                
                 existing_qr.delete()
-            # Save the QR code image to the static folder
+            
             static_folder = settings.STATIC_ROOT
             file_path = os.path.join(static_folder, f'qrcode_{awbno}.png')
             with open(file_path, 'wb') as f:
                 f.write(buffer.getvalue())
-            # Create Qr_Details object
+            
             qr_detail = Qr_Details.objects.create(awbno=awbno, Qr_image=file_path)
             qr_detail.save()
             

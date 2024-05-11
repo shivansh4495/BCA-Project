@@ -140,7 +140,7 @@ def client_order(request):
             receiver_cities = Branches.objects.values_list('city', flat=True).distinct()
             return render(request, 'client_order.html', {'sender_cities': sender_cities, 'receiver_cities': receiver_cities, 'receiver_states': receiver_states, 'sender_states': sender_states})
     else:
-        # If the session is not valid (Client_Id is not in the session), redirect to login page
+        
         return render(request, 'User_login_form.html')
 
 
@@ -160,7 +160,7 @@ def calculate_distance_view(request):
         data = json.loads(request.body)
         sender_address = data.get('sender_address')
         receiver_address = data.get('receiver_address')
-        
+        api_key = ''   #! Important: Put your API key here.
         distance = calculate_distance(sender_address, receiver_address, api_key)
         if distance is not None:
             return JsonResponse({'distance': distance})
