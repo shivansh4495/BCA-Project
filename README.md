@@ -88,7 +88,7 @@ Delivery Boy
 
 ![1715443236517](image/README/1715443236517.png)
 
-#### Installation 
+#### Installation
 
 * All required pip packeges are there in requirements.txt
 * If googlemaps doesn't install try this command
@@ -97,15 +97,22 @@ Delivery Boy
 pip install googlemaps --use-pep517
 ```
 
+* After installing all the packages, put your google distance matrix api key in order to calculate the distance between sender and receiver address.
+
+![1715446669984](image/README/1715446669984.png)
+
+
 * After installing all packeges, run the Django Project by entering the command.
 
-  ```
-  python manage.py runserver
-  ```
-* Credentials and Password for django admin superuser is
+```
+python manage.py runserver
+```
 
-  username- shivanshvaibhav
 
-  password-1234
+Credentials and Password for django admin superuser is
+
+username- shivanshvaibhav
+
+password-1234
 
 From django superuser pannel you can see the rest of the credentials for all users under tables - admin_tables, Branch_heads, Delivery_boy_details, login_infos.
