@@ -94,7 +94,6 @@ Delivery Boy
 * If googlemaps doesn't install try this command
 
 ```
-In Terminal run this command.
 pip install googlemaps --use-pep517
 ```
 
