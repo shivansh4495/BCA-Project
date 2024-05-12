@@ -60,7 +60,7 @@ In this module all the critical operations takes place this module contains two 
 
 ---
 
-#### Images related to different user's dashboard
+#### Images Related To Different User's Dashboard
 
 ##### Home Page
 
@@ -85,6 +85,13 @@ In this module all the critical operations takes place this module contains two 
 ##### Order Traking Directly From Homepage
 
 ![1715443236517](image/README/1715443236517.png)
+
+---
+
+#### Framework / Programming Language Used 
+
+* Django 5.0.3
+* python 3.12.3
 
 ---
 
@@ -113,12 +120,13 @@ In this module all the critical operations takes place this module contains two 
 python manage.py runserver
 ```
 
-    Credentials and Password for django admin superuser is
 
-    username- shivanshvaibhav
+Credentials and Password for django admin superuser is
 
-    password-1234
+> username- shivanshvaibhav
 
-From django superuser pannel you can see the rest of the credentials for all users under 			tables - admin_tables, Branch_heads, Delivery_boy_details, login_infos.
+> password-1234
+
+From django superuser pannel you can see the rest of the credentials for all users under tables - admin_tables, Branch_heads, Delivery_boy_details, login_infos.
 
 ---
