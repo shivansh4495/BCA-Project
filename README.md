@@ -4,8 +4,6 @@
 
 ## Client : SPEEDEX Courier Service
 
-# BCA-Project
-
 This is a Django Based project to manage the courier operations and tracking in real time, to the client.
 
 There are 4 main modules:
@@ -17,7 +15,7 @@ There are 4 main modules:
 
 ---
 
-#### administration
+#### Administration
 
 * In this module the company admin can see the total number of Packets based on their categories - courier, cargo, logistics. admin can also see the the number of Branches and it's details, with the functionality to create/delete branch and create credentials for the Branch Head to manage that perticular branch.
 * In admin dashboard there section called plan list where he views, add, edit, delete the plans through which the orders price is calculated.
@@ -47,13 +45,13 @@ In this module all the critical operations takes place this module contains two 
 
 ---
 
-#### homeapp
+#### Homeapp
 
 * This module contains home page of the website and  feedback, tracking realted forms where anyone with tracking id directly track their packet/order.
 
 ---
 
-#### userManagement
+#### UserManagement
 
 * This module client login and sign-up option and packet/order form to place new orders [ for logged-in user only ].
 * In client dashboard there are several options like - create new orders, profile management, feedback/queries option.
@@ -64,43 +62,50 @@ In this module all the critical operations takes place this module contains two 
 
 #### Images related to different user's dashboard
 
-##### home page
+##### Home Page
 
 ![1715443001454](image/README/1715443001454.png)
 
-##### speedex admin dashboard
+##### Speedex Admin Dashboard
 
 ![1715443065279](image/README/1715443065279.png)
 
-##### branch head dashboard
+##### Branch Head Dashboard
 
 ![1715443110550](image/README/1715443110550.png)
 
-##### delivery boy dashboard
+##### Delivery Boy Dashboard
 
 ![1715443134762](image/README/1715443134762.png)
 
-##### user dashboard
+##### User Dashboard
 
 ![1715443207870](image/README/1715443207870.png)
 
-##### order traking directly from homepage
+##### Order Traking Directly From Homepage
 
 ![1715443236517](image/README/1715443236517.png)
+
+---
+
+
 
 #### Installation
 
 * All required pip packeges are there in requirements.txt
+
+  ```
+  pip install -r requirements.txt
+
+  ```
 * If googlemaps doesn't install try this command
 
-```
-pip install googlemaps --use-pep517
-```
-
+  ```
+  pip install googlemaps --use-pep517
+  ```
 * After installing all the packages, put your google distance matrix api key in order to calculate the distance between sender and receiver address.
 
 ![1715446669984](image/README/1715446669984.png)
-
 
 * After installing all packeges, run the Django Project by entering the command.
 
@@ -108,11 +113,12 @@ pip install googlemaps --use-pep517
 python manage.py runserver
 ```
 
+    Credentials and Password for django admin superuser is
 
-Credentials and Password for django admin superuser is
+    username- shivanshvaibhav
 
-username- shivanshvaibhav
+    password-1234
 
-password-1234
+From django superuser pannel you can see the rest of the credentials for all users under 			tables - admin_tables, Branch_heads, Delivery_boy_details, login_infos.
 
-From django superuser pannel you can see the rest of the credentials for all users under tables - admin_tables, Branch_heads, Delivery_boy_details, login_infos.
+---
