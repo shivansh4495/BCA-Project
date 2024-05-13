@@ -16,6 +16,5 @@ def OrderTracking(request):
         
         return render(request, 'OrderTracking.html', {'updates': updates, 'awbno': awbno})
     else:
-        
-        return render(request, 'HomePage.html')
-
+        charge_details = ChargeDetails.objects.all()
+        return render(request, 'HomePage.html', {'charge_details': charge_details})
