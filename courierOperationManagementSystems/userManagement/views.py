@@ -16,6 +16,7 @@ from django.http import JsonResponse
 from django.contrib.auth import logout
 from homeapp.models import Feedback
 from .forms import FeedbackForm
+from django.db import IntegrityError
 
 
 
@@ -74,10 +75,14 @@ def signup(request):
             new_client=Client(Client_Name=Client_Name, Client_Address=Client_Address, Client_contact_No=Client_contact_No, Client_Email_Id=Client_Email_Id)
             log=Login_Info( User_Id=Client_Email_Id,User_Password=password, User_Type=User_Type)
             packet_table=User_Info(User_Id=Client_Email_Id, User_Name=Client_Name, User_Address=Client_Address, User_contact_No=Client_contact_No, User_Email_Id=Client_Email_Id)
-            new_client.save()
-            log.save()
-            packet_table.save()
-            messages.success(request,'Client is registered')
+            try:
+                
+                new_client.save()
+                log.save()
+                packet_table.save()
+                messages.success(request,'Client is registered')
+            except IntegrityError:
+                messages.error(request, 'Email address already exists. Please use a different email address.')
         else:
             messages.success(request,'Invalid captcha code')
     return render(request,"signup.html",locals())

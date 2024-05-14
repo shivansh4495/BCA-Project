@@ -17,7 +17,7 @@ There are 4 main modules:
 
 #### Administration
 
-* In this module the company admin can see the total number of Packets based on their categories - courier, cargo, logistics. admin can also see the the number of Branches and it's details, with the functionality to create/delete branch and create credentials for the Branch Head to manage that perticular branch.
+* In this module the company admin can see the total number of Packets based on their categories - courier, cargo, logistics. admin can also see the the number of Branches and it's details, with the functionality to create/delete branch and create credentials for the Branch Head to manage that particular branch.
 * In admin dashboard there section called plan list where he views, add, edit, delete the plans through which the orders price is calculated.
 
 ---
@@ -34,20 +34,20 @@ In this module all the critical operations takes place this module contains two 
 * In Branch head dashboard there is informations related to his branch like - branch name, branch address, and branch head.
 * Next in his dashboard branch head can view total number of packets related to his branch with details - AWBNO, sender name, sender address, sender contact number, receiver name, receiver name, receiver address, receiver contact number with option to allocate that packet to the delivery person.
 * Branch head also see the details of delivery boys with functionality to add new delivery boys.
-* Packets updates is also monitored here realated to his branch.
+* Packets updates is also monitored here related to his branch.
 * Query/Feedback given by clients to his specific branch is also shown in branch head dashboard.
 
 ###### Delivery Boy
 
 * In delivery boy dashboard all packets/orders allocated to him by branch head is shown here, with required info such as - AWBNO, order date, sender name, sender address, sender contact number, receiver name, receiver contact number, receiver address.
-* For tracking faclity there is option to generate QR Code which contains details like AWBNO, sender name, sender address, receiver name, receiver address, mode of payment at the time order is placed by the client.
+* For tracking facility there is option to generate QR Code which contains details like AWBNO, sender name, sender address, receiver name, receiver address, mode of payment at the time order is placed by the client.
 * Last there is section to update the packet status with auto time stamp to tell the end-user and concerning branch head about the packet/order status like where the packet/order is reached with location.
 
 ---
 
 #### Homeapp
 
-* This module contains home page of the website and  feedback, tracking realted forms where anyone with tracking id directly track their packet/order.
+* This module contains home page of the website and  feedback, tracking related forms where anyone with tracking id directly track their packet/order.
 
 ---
 
@@ -55,7 +55,7 @@ In this module all the critical operations takes place this module contains two 
 
 * This module client login and sign-up option and packet/order form to place new orders [ for logged-in user only ].
 * In client dashboard there are several options like - create new orders, profile management, feedback/queries option.
-* In main dashboard he can see his orders with detials like AWBNO, sender name, receiver name
+* In main dashboard he can see his orders with details like AWBNO, sender name, receiver name
 * Below that live order details are shown to provide information about the packet/order containing following informations - AWBNO, status, location, time [ date and time], delivery boy name by whom the status is updated for the specific packet/order.
 
 ---
@@ -88,14 +88,12 @@ In this module all the critical operations takes place this module contains two 
 
 ---
 
-#### Framework / Programming Language Used 
+#### Framework / Programming Language Used
 
 * Django 5.0.3
 * python 3.12.3
 
 ---
-
-
 
 #### Installation
 
@@ -119,7 +117,6 @@ In this module all the critical operations takes place this module contains two 
 ```
 python manage.py runserver
 ```
-
 
 Credentials and Password for django admin superuser is
 

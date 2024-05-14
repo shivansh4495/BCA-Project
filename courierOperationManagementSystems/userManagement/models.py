@@ -6,7 +6,7 @@ class Client(models.Model):
     Client_Name = models.CharField(max_length=100, null=False)
     Client_Address = models.CharField(max_length=200, null=False)
     Client_contact_No = models.CharField(max_length=15, null=True)
-    Client_Email_Id = models.CharField(max_length=30, null=True)
+    Client_Email_Id = models.CharField(max_length=30, null=True, unique=True)
     def __str__(self):
         return f"{self.Client_Id} - {self.Client_Name}"
 
