@@ -13,7 +13,6 @@ from django.utils import timezone
 import googlemaps
 import json
 from django.http import JsonResponse
-from django.contrib.auth import logout
 from homeapp.models import Feedback
 from .forms import FeedbackForm
 from django.db import IntegrityError
@@ -39,7 +38,7 @@ def user_login_form(request):
         except Login_Info.DoesNotExist:
             print("Login failed: Invalid User name or Password")
             messages.error(request, 'Login failed: Invalid User name or Password')
-    return render(request, 'User_login_form.html')
+    return render(request, 'user_login_form.html')
 
 
 
@@ -58,7 +57,7 @@ def user_dashboard(request):
     except KeyError:
         print("Session key not found")
     
-    return redirect('user_login_form')
+    return redirect('userManagement:user_login_form')
 
 
 def signup(request):
@@ -165,7 +164,7 @@ def calculate_distance_view(request):
         data = json.loads(request.body)
         sender_address = data.get('sender_address')
         receiver_address = data.get('receiver_address')
-        api_key = ''   #! Important: Put your API key here.
+        api_key = 'AIzaSyAq23BWf_3ZAOZvqyGZlUzfaOA9WrgUk_w'   #! Important: Put your API key here.
         distance = calculate_distance(sender_address, receiver_address, api_key)
         if distance is not None:
             return JsonResponse({'distance': distance})

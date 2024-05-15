@@ -11,4 +11,5 @@ urlpatterns = [
     path('delete_order/<str:awbno>/', views.delete_order, name='delete_order'),
     path('update_packet_status/', views.update_packet_status, name='update_packet_status'), 
     path('generate-qr/', views.generate_and_store_qr, name='generate_and_store_qr'),
+    path('logout_view/', views.logout_view, name='logout_view'),
 ]

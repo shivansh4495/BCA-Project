@@ -65,13 +65,6 @@ def branch_login_form(request):
     return render(request, "branch_login_form.html")
 
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def logout_view(request):
-    logout(request)
-    request.session.flush()
-    return redirect('branch_login_form')
-
-
 def branch_head_dashboard(request):
     username = request.GET.get('username')
     if username:
@@ -153,7 +146,7 @@ def delivery_boy_dashboard(request):
                 return render(request, 'delivery_boy_dashboard.html', {'username': username, 'delivery_boy': delivery_boy, 'packets_details': packets_details, 'live_track': live_track, 'packets_allotted': packets_allotted,})
         except KeyError:
             print("Session key not found")
-    # Redirect to the login form if session is not available or invalid
+    
     return redirect(reverse('BranchesInfo:branch_login_form'))
 
 
@@ -167,8 +160,7 @@ def add_delivery_boy(request):
         area = request.POST.get('area')
         branch_cd = request.POST.get('branch_cd')
         User_Type='delivery_boy'
-
-        # Create a new delivery boy object
+        
         new_delivery_boy = delivery_Boy_details(
             Delivery_Boy_Name=delivery_boy_name,
             Delivery_Boy_Username=username,
@@ -290,3 +282,25 @@ def generate_and_store_qr(request):
         messages.error(request, "Only POST requests are allowed.")
     
     return redirect('BranchesInfo:delivery_boy_dashboard') 
+
+
+def logout_view(request):
+    try:
+        
+        branch_head_id = request.session.get('Branch_head_Id')
+        delivery_boy_id = request.session.get('Delivery_Boy_Id')
+        
+        if branch_head_id:
+            del request.session['Branch_head_Id']
+            # del request.session['userid']
+            print(f"Session data cleared successfully for Branch Head ID: {branch_head_id}")
+        if delivery_boy_id:
+            del request.session['Delivery_Boy_Id']
+            
+            print(f"Session data cleared successfully for Delivery Boy ID: {delivery_boy_id}")
+        request.session.flush()
+        logout(request)
+        return redirect(reverse('BranchesInfo:branch_login_form'))
+    except Exception as e:
+        print(f"Error occurred during logout: {e}")
+        return redirect(reverse('BranchesInfo:branch_login_form'))

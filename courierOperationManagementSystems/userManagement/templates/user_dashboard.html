@@ -9,7 +9,6 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Adjust sidebar width and colors */
         .sidebar {
             background-color: #333;
             color: #fff;
@@ -17,10 +16,10 @@
             position: fixed;
             top: 0;
             left: 0;
-            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-y: auto; 
         }
         .sidebar a {
-            padding: 20px 15px; /* Added more vertical padding */
+            padding: 20px 15px; 
             text-decoration: none;
             color: #fff;
             display: block;
@@ -38,7 +37,7 @@
             padding-left: 30px;
         }
         .logout {
-            padding: 20px 15px; /* Added more vertical padding */
+            padding: 20px 15px; 
             text-decoration: none;
             color: #fff;
             display: block;
@@ -62,7 +61,7 @@
                 <!-- User Info -->
                 <div class="user-info">
                     Welcome, {{ username }}
-                    <!-- You can replace `{{ username }}` with the actual username variable you pass from the Django view -->
+                    
                 </div>
                 <a href="{% url 'userManagement:client_order'%}"><i class="fas fa-shopping-cart"></i>Create New Orders</a>
                 <!-- Orders Link with Dropdown -->
@@ -70,7 +69,6 @@
                 <div class="dropdown">
                     <a href="{% url 'userManagement:client_order'%}" class="dropdown-item">New Orders</a>
                 </div> -->
-
                 <!-- Profile Management Link -->
                 <a href="{% url 'userManagement:profile_management' %}"><i class="fas fa-user"></i> Profile Management</a>
 
@@ -94,7 +92,6 @@
                     <th>AWBNO</th>
                     <th>Sender Name</th>
                     <th>Receiver Name</th>
-                    <!-- Add more columns as needed -->
                 </tr>
             </thead>
             <tbody>
@@ -103,7 +100,6 @@
                     <td>{{ order.AWBNO }}</td>
                     <td>{{ order.Sender_Name }}</td>
                     <td>{{ order.Receiver_Name }}</td>
-                    <!-- Add more columns as needed -->
                 </tr>
                 {% empty %}
                 <tr>
@@ -118,7 +114,7 @@
     {% endif %}
 </div>
 
-                <!-- Live Order Details -->
+                
 <div class="order-details">
     <h2>Live Order Details</h2>
     <div class="table-responsive">

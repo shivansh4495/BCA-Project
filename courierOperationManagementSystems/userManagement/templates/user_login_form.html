@@ -49,17 +49,17 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding is included in the width */
+            box-sizing: border-box; 
         }
         .form-group button {
-            width: 100%; /* Make the button fill the entire width */
+            width: 100%; 
             padding: 10px;
             border: none;
             border-radius: 5px;
             background-color: #007bff;
             color: #fff;
             cursor: pointer;
-            display: block; /* Change button to display block */
+            display: block; 
         }
         .form-group button:hover {
             background-color: #0056b3;
@@ -159,11 +159,9 @@
                 document.getElementById("frmlogin").submit();
             }
         }
-                // Add an event listener to the button
+                
                 document.getElementById("signupButton").addEventListener("click", function(event) {
-                    // Prevent the default behavior of the button (form submission)
                     event.preventDefault();
-                    // Redirect to the signup page
                     window.location.href = "{% url 'userManagement:signup' %}";
                 });
     </script>

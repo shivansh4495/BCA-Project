@@ -4,15 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0"> -->
     
     <title>Delivery Boy DashBoard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Adjust sidebar width and colors */
+        
         .sidebar {
             background-color: #333;
             color: #fff;
@@ -20,10 +17,10 @@
             position: fixed;
             top: 0;
             left: 0;
-            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-y: auto; 
         }
         .sidebar a {
-            padding: 20px 15px; /* Added more vertical padding */
+            padding: 20px 15px; 
             text-decoration: none;
             color: #fff;
             display: block;
@@ -41,7 +38,7 @@
             padding-left: 30px;
         }
         .logout {
-            padding: 20px 15px; /* Added more vertical padding */
+            padding: 20px 15px; 
             text-decoration: none;
             color: #fff;
             display: block;
@@ -75,12 +72,11 @@
                     Welcome, {{ username }}
                 </div>
                 
-                <!-- <a href="#"><i class="fas fa-user"></i> Profile Management</a> -->
                 
                 
-                <a href="{% url 'BranchesInfo:branch_login_form'%}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                
+                <a href="{% url 'BranchesInfo:logout_view'%}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
-
             
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="order-details">
@@ -251,32 +247,26 @@
                     dropdown.classList.toggle('active');
                 });
             });
-    
-            // Add event listener to each "Generate QR" button
+            
             const generateQRButtons = document.querySelectorAll('.generate-qr-button');
             generateQRButtons.forEach(function(button) {
                 button.addEventListener('click', function() {
-                    // Get the AWBNO from the corresponding row
                     const awbno = this.dataset.awbno;
-                    // Update the value of the hidden input field in the form
                     document.getElementById('awbnoInput').value = awbno;
-                    // Submit the form
                     document.getElementById('generateQRForm').submit();
                     
                 });
             });
-    
-            // Get the URL for updating order status
+            
             const updateOrderStatusURL = "{% url 'BranchesInfo:update_packet_status' %}";
-    
-            // Add event listener to the update form
+            
             document.getElementById('update-form').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent default form submission
+                event.preventDefault(); 
                 
-                // Collect form data
+                
                 var formData = new FormData(this);
                 
-                // Send AJAX request
+                
                 fetch(updateOrderStatusURL, {
                     method: 'POST',
                     body: formData,
@@ -286,11 +276,11 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        // Success message or update UI accordingly
+                        
                         console.log('Order status updated successfully');
                         alert('Order Updated successfully!');
                     } else {
-                        // Error message or handle errors
+                        
                         console.error('Failed to update order status');
                     }
                 })
