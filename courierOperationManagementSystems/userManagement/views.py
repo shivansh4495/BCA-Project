@@ -164,7 +164,7 @@ def calculate_distance_view(request):
         data = json.loads(request.body)
         sender_address = data.get('sender_address')
         receiver_address = data.get('receiver_address')
-        api_key = 'AIzaSyAq23BWf_3ZAOZvqyGZlUzfaOA9WrgUk_w'   #! Important: Put your API key here.
+        api_key = ''   #! Important: Put your API key here.
         distance = calculate_distance(sender_address, receiver_address, api_key)
         if distance is not None:
             return JsonResponse({'distance': distance})
