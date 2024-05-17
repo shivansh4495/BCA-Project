@@ -41,7 +41,7 @@ def user_login_form(request):
     return render(request, 'user_login_form.html')
 
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_dashboard(request):
     try:
         session_id = request.session.get('Client_Id')
@@ -150,11 +150,11 @@ def client_order(request):
 
 def calculate_distance(sender_address, receiver_address, api_key):
     gmaps = googlemaps.Client(key=api_key)
-    # Call the distance_matrix method to calculate the distance
+    
     result = gmaps.distance_matrix(sender_address, receiver_address)
     if 'rows' in result and result['rows']:
         distance = result['rows'][0]['elements'][0]['distance']['value']
-        distance_in_km = round(distance / 1000, 1)  # Convert distance from meters to kilometers and round to nearest tenth
+        distance_in_km = round(distance / 1000, 1)  
         return distance_in_km
     else:
         return None
@@ -217,26 +217,34 @@ def profile_management(request):
 
 def logout_view(request):
     try:
-        session_id = request.session.get('Client_Id')
-        session_name = request.session.get('Client_Name')
-        if session_id and session_name:
+        print("Session keys before deletion:", request.session.keys())
+
+        if 'Client_Id' in request.session:
+            print("Client_Id in session:", request.session['Client_Id'])
             del request.session['Client_Id']
+        else:
+            print("Client_Id not found in session")
+
+        if 'Client_Name' in request.session:
+            print("Client_Name in session:", request.session['Client_Name'])
             del request.session['Client_Name']
-            request.session.flush()
-            print("Session data cleared successfully for logout_view:", session_name)
-        logout(request)
+        else:
+            print("Client_Name not found in session")
+
+        print("Session keys deleted")
+
         return redirect('userManagement:user_login_form')
-    except Exception as e:
-        print("Error occurred during logout:", e)
+    except KeyError as e:
+        print("Error deleting session keys:", e)
         return redirect('userManagement:user_login_form')
 
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
             form.save()
-            # Redirect to the userDashboard after successful form submission
             return redirect('userManagement:user_dashboard')  
     else:
         form = FeedbackForm()

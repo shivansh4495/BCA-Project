@@ -48,12 +48,10 @@ def logout_view(request):
             print("username in session:", request.session['username'])
         else:
             print("username not found in session")
-
         
         del request.session['Admin_Id']
         del request.session['username']
         print("Session keys deleted")
-
         
         return redirect('administration:admin_login_form')
     except KeyError as e:

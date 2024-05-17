@@ -76,7 +76,7 @@ In this module all the critical operations takes place this module contains two 
 
 ##### Delivery Boy Dashboard
 
-![1715443134762](image/README/1715443134762.png)
+![1715966433058](image/README/1715966433058.png)
 
 ##### User Dashboard
 

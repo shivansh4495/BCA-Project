@@ -64,7 +64,7 @@ def branch_login_form(request):
     
     return render(request, "branch_login_form.html")
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def branch_head_dashboard(request):
     username = request.GET.get('username')
     if username:
@@ -111,7 +111,7 @@ def delete_order(request, awbno):
     else:
         return HttpResponseNotFound("Method not allowed")
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def delivery_boy_dashboard(request):
     
     username = request.GET.get('username')
@@ -286,21 +286,21 @@ def generate_and_store_qr(request):
 
 def logout_view(request):
     try:
-        
-        branch_head_id = request.session.get('Branch_head_Id')
-        delivery_boy_id = request.session.get('Delivery_Boy_Id')
-        
-        if branch_head_id:
+        print("Session keys before deletion:", request.session.keys())
+        if 'Branch_head_Id' in request.session:
+            branch_head_id = request.session['Branch_head_Id']
             del request.session['Branch_head_Id']
-            # del request.session['userid']
             print(f"Session data cleared successfully for Branch Head ID: {branch_head_id}")
-        if delivery_boy_id:
+        
+        if 'Delivery_Boy_Id' in request.session:
+            delivery_boy_id = request.session['Delivery_Boy_Id']
             del request.session['Delivery_Boy_Id']
-            
             print(f"Session data cleared successfully for Delivery Boy ID: {delivery_boy_id}")
+        
         request.session.flush()
         logout(request)
         return redirect(reverse('BranchesInfo:branch_login_form'))
     except Exception as e:
         print(f"Error occurred during logout: {e}")
         return redirect(reverse('BranchesInfo:branch_login_form'))
+
