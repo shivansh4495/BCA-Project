@@ -100,7 +100,7 @@ In this module all the critical operations takes place this module contains two 
 * All required pip packeges are there in requirements.txt
 
   ```
-  pip install -r requirements.txt
+  pip install --use-pep517 -r requirements.txt
 
   ```
 * If googlemaps doesn't install try this command
